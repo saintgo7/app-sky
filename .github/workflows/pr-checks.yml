@@ -1,0 +1,483 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    types: [opened, synchronize, reopened]
+
+env:
+  FLUTTER_VERSION: '3.16.x'
+  JAVA_VERSION: '17'
+
+jobs:
+  # Quick validation for PR
+  pr-validation:
+    name: PR Validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Check PR title
+      uses: amannn/action-semantic-pull-request@v5
+      with:
+        types: |
+          feat
+          fix
+          docs
+          style
+          refactor
+          perf
+          test
+          chore
+        requireScope: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Check for sensitive files
+      run: |
+        if git diff --name-only origin/main...HEAD | grep -E '\.(key|p12|keystore|jks)$'; then
+          echo "❌ Sensitive files detected in PR"
+          exit 1
+        fi
+        echo "✅ No sensitive files detected"
+        
+    - name: Check for TODOs and FIXMEs
+      run: |
+        TODO_COUNT=$(git diff --name-only origin/main...HEAD | xargs grep -l "TODO\|FIXME" | wc -l || true)
+        if [ $TODO_COUNT -gt 5 ]; then
+          echo "❌ Too many TODOs/FIXMEs found ($TODO_COUNT files)"
+          git diff --name-only origin/main...HEAD | xargs grep -n "TODO\|FIXME"
+          exit 1
+        fi
+        echo "✅ TODO/FIXME count acceptable: $TODO_COUNT"
+
+  # Fast code quality checks
+  quick-code-check:
+    name: Quick Code Quality Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Check formatting
+      run: flutter format --dry-run --set-exit-if-changed .
+      
+    - name: Quick analyze
+      run: flutter analyze --no-fatal-infos
+
+  # Run tests on changed code only
+  incremental-tests:
+    name: Incremental Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Get changed files
+      id: changed-files
+      run: |
+        CHANGED_FILES=$(git diff --name-only origin/main...HEAD | grep '\.dart$' | grep -v '\.g\.dart$' | tr '\n' ' ')
+        echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
+        echo "Changed Dart files: $CHANGED_FILES"
+        
+    - name: Run tests for changed files
+      if: steps.changed-files.outputs.changed_files != ''
+      run: |
+        # Find and run tests related to changed files
+        for file in ${{ steps.changed-files.outputs.changed_files }}; do
+          # Convert lib/path/file.dart to test/path/file_test.dart
+          test_file=$(echo $file | sed 's|^lib/|test/|' | sed 's|\.dart$|_test.dart|')
+          if [ -f "$test_file" ]; then
+            echo "Running test: $test_file"
+            flutter test "$test_file"
+          fi
+        done
+
+  # Security check for PR
+  pr-security-check:
+    name: PR Security Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Check for hardcoded secrets
+      run: |
+        # Check for potential secrets in changed files
+        if git diff --name-only origin/main...HEAD | xargs grep -l "password\|secret\|key\|token" | head -5; then
+          echo "⚠️ Potential secrets found. Please review:"
+          git diff --name-only origin/main...HEAD | xargs grep -n -i "password\|secret\|key\|token" | head -10
+          echo "Make sure no actual credentials are committed!"
+        fi
+        
+    - name: Check API endpoint security
+      run: |
+        # Check for insecure HTTP endpoints
+        if git diff origin/main...HEAD | grep -i "http://"; then
+          echo "❌ Insecure HTTP endpoints found!"
+          git diff origin/main...HEAD | grep -i "http://"
+          exit 1
+        fi
+
+  # Check test coverage impact
+  coverage-check:
+    name: Test Coverage Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Run tests with coverage
+      run: flutter test --coverage
+      
+    - name: Install coverage tools
+      run: |
+        dart pub global activate coverage
+        
+    - name: Generate coverage report
+      run: |
+        dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
+        
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: coverage/lcov.info
+        flags: pr-tests
+        name: pr-coverage
+        
+    - name: Coverage comment
+      uses: 5monkeys/cobertura-action@master
+      with:
+        path: coverage/lcov.info
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        minimum_coverage: 85
+        show_missing: true
+        show_line: true
+        fail_below_threshold: false
+
+  # Build check for PR
+  pr-build-check:
+    name: PR Build Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: ${{ env.JAVA_VERSION }}
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Build Android debug
+      run: flutter build apk --debug
+      
+    - name: Check APK size
+      run: |
+        FILESIZE=$(stat -c%s "build/app/outputs/flutter-apk/app-debug.apk")
+        echo "Debug APK size: $(($FILESIZE / 1024 / 1024)) MB"
+        
+        # Warn if debug APK is larger than 100MB
+        if [ $FILESIZE -gt 104857600 ]; then
+          echo "⚠️ Debug APK size is quite large (>100MB). Consider optimizing."
+        fi
+
+  # Accessibility check
+  accessibility-check:
+    name: Accessibility Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Run accessibility tests
+      run: |
+        # Run specific accessibility widget tests
+        if ls test/widget/*accessibility*test.dart 1> /dev/null 2>&1; then
+          flutter test test/widget/*accessibility*test.dart
+        else
+          echo "No specific accessibility tests found"
+        fi
+
+  # Performance impact check
+  performance-impact:
+    name: Performance Impact Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Check for performance-sensitive changes
+      run: |
+        # Check if any performance-critical files were changed
+        PERF_FILES=$(git diff --name-only origin/main...HEAD | grep -E "(recommendation_engine|payment_service|booking)" | wc -l)
+        if [ $PERF_FILES -gt 0 ]; then
+          echo "⚠️ Performance-critical files changed. Running performance tests."
+          echo "performance_check_required=true" >> $GITHUB_ENV
+        fi
+        
+    - name: Run performance tests
+      if: env.performance_check_required == 'true'
+      run: |
+        # Run performance-related unit tests
+        if ls test/unit/services/*performance*test.dart 1> /dev/null 2>&1; then
+          flutter test test/unit/services/*performance*test.dart
+        fi
+
+  # Documentation check
+  documentation-check:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Check for missing documentation
+      run: |
+        # Check if new public classes/methods need documentation
+        NEW_FILES=$(git diff --name-only origin/main...HEAD | grep '\.dart$')
+        MISSING_DOCS=0
+        
+        for file in $NEW_FILES; do
+          if [ -f "$file" ]; then
+            # Check for public classes without documentation
+            if grep -n "^class \|^abstract class " "$file" | grep -v "/// \|// "; then
+              echo "⚠️ Public class in $file may need documentation"
+              MISSING_DOCS=$((MISSING_DOCS + 1))
+            fi
+          fi
+        done
+        
+        if [ $MISSING_DOCS -gt 3 ]; then
+          echo "❌ Too many undocumented public classes ($MISSING_DOCS)"
+          exit 1
+        fi
+
+  # Dependency check
+  dependency-check:
+    name: Dependency Security Check
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Check for dependency vulnerabilities
+      run: |
+        # Check for known vulnerable dependencies
+        flutter pub deps --json | jq '.packages[] | select(.source == "hosted") | .name + ":" + .version' | sort
+        
+        # Additional security scan would go here
+        # This is a placeholder for actual vulnerability scanning
+
+  # PR summary comment
+  pr-summary:
+    name: PR Summary
+    runs-on: ubuntu-latest
+    needs: [pr-validation, quick-code-check, incremental-tests, coverage-check, pr-build-check]
+    if: always()
+    
+    steps:
+    - name: PR Summary Comment
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { data: pr } = await github.rest.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
+          });
+          
+          const checkResults = {
+            'pr-validation': '${{ needs.pr-validation.result }}',
+            'quick-code-check': '${{ needs.quick-code-check.result }}',
+            'incremental-tests': '${{ needs.incremental-tests.result }}',
+            'coverage-check': '${{ needs.coverage-check.result }}',
+            'pr-build-check': '${{ needs.pr-build-check.result }}'
+          };
+          
+          let summary = "## 🔍 PR Check Summary\n\n";
+          let allPassed = true;
+          
+          for (const [check, result] of Object.entries(checkResults)) {
+            const emoji = result === 'success' ? '✅' : result === 'failure' ? '❌' : '⏭️';
+            summary += `${emoji} **${check}**: ${result}\n`;
+            if (result === 'failure') allPassed = false;
+          }
+          
+          if (allPassed) {
+            summary += "\n🎉 All checks passed! This PR is ready for review.";
+          } else {
+            summary += "\n⚠️ Some checks failed. Please review and fix the issues.";
+          }
+          
+          await github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: context.issue.number,
+            body: summary
+          });
+
+  # Auto-assign reviewers based on changed files
+  auto-assign-reviewers:
+    name: Auto-assign Reviewers
+    runs-on: ubuntu-latest
+    if: github.event.action == 'opened'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Auto-assign reviewers
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const changedFiles = await github.rest.pulls.listFiles({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: context.issue.number
+          });
+          
+          let reviewers = [];
+          const filePathReviewers = {
+            'lib/services/ai/': ['ai-team-lead'],
+            'lib/services/payments/': ['payments-team-lead'],
+            'lib/data/': ['backend-team-lead'],
+            'lib/presentation/': ['frontend-team-lead'],
+            'test/': ['qa-team-lead']
+          };
+          
+          for (const file of changedFiles.data) {
+            for (const [path, teamReviewers] of Object.entries(filePathReviewers)) {
+              if (file.filename.startsWith(path)) {
+                reviewers.push(...teamReviewers);
+              }
+            }
+          }
+          
+          // Remove duplicates and PR author
+          reviewers = [...new Set(reviewers)].filter(r => r !== context.actor);
+          
+          if (reviewers.length > 0) {
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              reviewers: reviewers.slice(0, 3) // Max 3 reviewers
+            });
+          }

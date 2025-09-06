@@ -1,0 +1,1 @@
+{"inputs":["/home/ubuntu/sky-air/web/*/index.html","/home/ubuntu/sky-air/web/flutter_bootstrap.js","/home/ubuntu/flutter/bin/cache/engine.stamp"],"outputs":["/home/ubuntu/sky-air/build/web/*/index.html","/home/ubuntu/sky-air/build/web/flutter_bootstrap.js"],"buildKey":"[{\"compileTarget\":\"dart2js\",\"renderer\":\"canvaskit\",\"mainJsPath\":\"main.dart.js\"}]"}

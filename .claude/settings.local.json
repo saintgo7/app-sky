@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(flutter pub:*)",
+      "Bash(cp:*)",
+      "Bash(flutter test:*)",
+      "Bash(flutter packages pub run build_runner build:*)",
+      "Bash(pkill:*)",
+      "Bash(flutter run:*)",
+      "Bash(flutter build:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(tree:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter clean:*)",
+      "Bash(true)"
+    ],
+    "deny": []
+  }
+}

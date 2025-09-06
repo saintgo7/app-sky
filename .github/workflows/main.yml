@@ -1,0 +1,526 @@
+name: TravelMate CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [published]
+
+env:
+  FLUTTER_VERSION: '3.16.x'
+  JAVA_VERSION: '17'
+  NODE_VERSION: '18'
+
+jobs:
+  # Code Quality and Linting
+  code-quality:
+    name: Code Quality Analysis
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get Flutter dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Analyze code
+      run: flutter analyze
+      
+    - name: Check formatting
+      run: flutter format --dry-run --set-exit-if-changed .
+      
+    - name: Run Dart Code Metrics
+      uses: dart-code-checker/dart-code-metrics-action@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        pull_request_comment: true
+
+  # Security Scanning
+  security-scan:
+    name: Security Vulnerability Scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Run security scan
+      run: |
+        dart pub global activate pana
+        dart pub global run pana --flutter-sdk $(which flutter)/.. .
+        
+    - name: Check for known vulnerabilities
+      run: flutter pub deps --json | dart pub global run dependency_validator
+
+  # Unit Tests
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Run unit tests
+      run: flutter test --coverage --test-randomize-ordering-seed=random
+      
+    - name: Generate coverage report
+      run: |
+        dart pub global activate coverage
+        dart pub global run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
+        
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: coverage/lcov.info
+        flags: unittests
+        name: unit-tests
+        
+    - name: Coverage threshold check
+      uses: VeryGoodOpenSource/very_good_coverage@v2
+      with:
+        path: coverage/lcov.info
+        min_coverage: 90
+
+  # Widget Tests
+  widget-tests:
+    name: Widget Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Run widget tests
+      run: flutter test test/widget/ --coverage --test-randomize-ordering-seed=random
+      
+    - name: Upload widget test coverage
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: coverage/lcov.info
+        flags: widgettests
+        name: widget-tests
+
+  # Integration Tests
+  integration-tests:
+    name: Integration Tests
+    runs-on: macos-latest
+    timeout-minutes: 45
+    strategy:
+      matrix:
+        device: ['iPhone 15', 'Pixel 7']
+        
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: ${{ env.JAVA_VERSION }}
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Setup iOS Simulator
+      if: contains(matrix.device, 'iPhone')
+      run: |
+        xcrun simctl create test-iphone com.apple.CoreSimulator.SimDeviceType.iPhone-15 com.apple.CoreSimulator.SimRuntime.iOS-17-0
+        xcrun simctl boot test-iphone
+        
+    - name: Setup Android Emulator
+      if: contains(matrix.device, 'Pixel')
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 33
+        target: google_apis
+        arch: x86_64
+        profile: Nexus 6
+        
+    - name: Run integration tests
+      run: |
+        if [[ "${{ matrix.device }}" == *"iPhone"* ]]; then
+          flutter test integration_test/booking_flow_test.dart --device-id test-iphone
+          flutter test integration_test/realtime_updates_test.dart --device-id test-iphone
+          flutter test integration_test/offline_mode_test.dart --device-id test-iphone
+        else
+          flutter test integration_test/booking_flow_test.dart
+          flutter test integration_test/realtime_updates_test.dart
+          flutter test integration_test/offline_mode_test.dart
+        fi
+
+  # Build Android
+  build-android:
+    name: Build Android APK/AAB
+    runs-on: ubuntu-latest
+    needs: [code-quality, unit-tests, widget-tests]
+    timeout-minutes: 30
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Setup Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'adopt'
+        java-version: ${{ env.JAVA_VERSION }}
+        
+    - name: Decode Android keystore
+      run: |
+        echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android/app/keystore.jks
+        
+    - name: Create key.properties
+      run: |
+        cat << EOF > android/key.properties
+        storePassword=${{ secrets.ANDROID_STORE_PASSWORD }}
+        keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}
+        keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}
+        storeFile=keystore.jks
+        EOF
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Build APK
+      run: flutter build apk --release
+      
+    - name: Build App Bundle
+      run: flutter build appbundle --release
+      
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
+        
+    - name: Upload AAB artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-aab
+        path: build/app/outputs/bundle/release/app-release.aab
+
+  # Build iOS
+  build-ios:
+    name: Build iOS IPA
+    runs-on: macos-latest
+    needs: [code-quality, unit-tests, widget-tests]
+    timeout-minutes: 40
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Setup certificates and provisioning profiles
+      env:
+        BUILD_CERTIFICATE_BASE64: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}
+        P12_PASSWORD: ${{ secrets.IOS_P12_PASSWORD }}
+        BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.IOS_BUILD_PROVISION_PROFILE_BASE64 }}
+        KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
+      run: |
+        # Create variables
+        CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+        PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+        # Import certificate and provisioning profile from secrets
+        echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+        echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+
+        # Create temporary keychain
+        security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+        security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+        # Import certificate to keychain
+        security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        security list-keychain -d user -s $KEYCHAIN_PATH
+
+        # Apply provisioning profile
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+        
+    - name: Get dependencies
+      run: flutter pub get
+      
+    - name: Generate code
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+      
+    - name: Build iOS
+      run: |
+        flutter build ios --release --no-codesign
+        cd ios
+        xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Release -archivePath Runner.xcarchive archive CODE_SIGNING_ALLOWED=NO
+        
+    - name: Upload iOS build artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ios-build
+        path: ios/Runner.xcarchive
+
+  # Performance Testing
+  performance-tests:
+    name: Performance Tests
+    runs-on: ubuntu-latest
+    needs: [build-android]
+    timeout-minutes: 30
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: 'stable'
+        cache: true
+        
+    - name: Download Android APK
+      uses: actions/download-artifact@v3
+      with:
+        name: android-apk
+        
+    - name: Run performance tests
+      run: |
+        flutter test test/performance/ --plain-name="*performance*"
+        
+    - name: Analyze APK size
+      run: |
+        ls -la app-release.apk
+        FILESIZE=$(stat -c%s "app-release.apk")
+        echo "APK size: $(($FILESIZE / 1024 / 1024)) MB"
+        
+        # Fail if APK is larger than 50MB
+        if [ $FILESIZE -gt 52428800 ]; then
+          echo "APK size exceeds 50MB limit"
+          exit 1
+        fi
+
+  # Deploy to Firebase App Distribution (Development)
+  deploy-firebase:
+    name: Deploy to Firebase App Distribution
+    runs-on: ubuntu-latest
+    needs: [integration-tests, build-android, build-ios]
+    if: github.ref == 'refs/heads/develop'
+    timeout-minutes: 15
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download Android APK
+      uses: actions/download-artifact@v3
+      with:
+        name: android-apk
+        
+    - name: Setup Firebase CLI
+      uses: w9jds/firebase-action@master
+      with:
+        args: --version
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        
+    - name: Deploy Android to Firebase App Distribution
+      run: |
+        firebase appdistribution:distribute app-release.apk \
+          --app ${{ secrets.FIREBASE_ANDROID_APP_ID }} \
+          --token ${{ secrets.FIREBASE_TOKEN }} \
+          --groups "qa-testers,internal-testers" \
+          --release-notes "Build from commit ${{ github.sha }}"
+
+  # Deploy to Google Play Store (Production)
+  deploy-play-store:
+    name: Deploy to Google Play Store
+    runs-on: ubuntu-latest
+    needs: [integration-tests, build-android, performance-tests]
+    if: github.event_name == 'release'
+    timeout-minutes: 20
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download Android AAB
+      uses: actions/download-artifact@v3
+      with:
+        name: android-aab
+        
+    - name: Setup Google Play Service Account
+      run: |
+        echo "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}" > service-account.json
+        
+    - name: Deploy to Play Store
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+        packageName: com.travelmate.app
+        releaseFiles: app-release.aab
+        track: production
+        status: completed
+        whatsNewDirectory: fastlane/metadata/android/en-US/changelogs
+
+  # Deploy to App Store (Production)
+  deploy-app-store:
+    name: Deploy to App Store
+    runs-on: macos-latest
+    needs: [integration-tests, build-ios, performance-tests]
+    if: github.event_name == 'release'
+    timeout-minutes: 25
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download iOS build
+      uses: actions/download-artifact@v3
+      with:
+        name: ios-build
+        
+    - name: Setup App Store credentials
+      env:
+        APP_STORE_CONNECT_API_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+        APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      run: |
+        mkdir -p ~/.appstoreconnect/private_keys/
+        echo -n "$APP_STORE_CONNECT_API_KEY_BASE64" | base64 --decode --output ~/.appstoreconnect/private_keys/AuthKey_$APP_STORE_CONNECT_API_KEY_ID.p8
+        
+    - name: Install fastlane
+      run: |
+        sudo gem install fastlane
+        
+    - name: Deploy to App Store
+      run: |
+        cd ios
+        fastlane release
+
+  # Notification on failure
+  notify-on-failure:
+    name: Notify on Pipeline Failure
+    runs-on: ubuntu-latest
+    needs: [code-quality, security-scan, unit-tests, widget-tests, integration-tests, build-android, build-ios]
+    if: failure()
+    
+    steps:
+    - name: Notify Slack on failure
+      uses: 8398a7/action-slack@v3
+      with:
+        status: failure
+        channel: '#dev-alerts'
+        text: |
+          🚨 TravelMate CI/CD Pipeline Failed!
+          
+          Branch: ${{ github.ref }}
+          Commit: ${{ github.sha }}
+          Author: ${{ github.actor }}
+          
+          Please check the pipeline logs and fix the issues.
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # Success notification
+  notify-on-success:
+    name: Notify on Successful Deployment
+    runs-on: ubuntu-latest
+    needs: [deploy-play-store, deploy-app-store]
+    if: success() && github.event_name == 'release'
+    
+    steps:
+    - name: Notify Slack on success
+      uses: 8398a7/action-slack@v3
+      with:
+        status: success
+        channel: '#releases'
+        text: |
+          🎉 TravelMate ${{ github.event.release.tag_name }} Successfully Deployed!
+          
+          ✅ Google Play Store: Live
+          ✅ App Store: Submitted for review
+          
+          Release Notes: ${{ github.event.release.body }}
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
