@@ -1,0 +1,16 @@
+# Docker를 사용한 웹서버 배포
+# TravelMate Flutter Web App
+
+FROM nginx:alpine
+
+# 빌드된 웹앱 복사
+COPY build/web /usr/share/nginx/html
+
+# Nginx 설정 파일
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# 포트 노출
+EXPOSE 80
+
+# Nginx 실행
+CMD ["nginx", "-g", "daemon off;"]
