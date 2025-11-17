@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('로그인 성공!'),
-            backgroundColor: Colors.green,
+            backgroundColor: AppColors.success,
           ),
         );
         context.go('/');
@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('로그인 실패. 이메일과 비밀번호를 확인해주세요.'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.danger,
           ),
         );
       }
@@ -111,9 +111,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 Text(
                   '여행의 모든 순간을 함께',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
-                    color: Colors.grey.shade600,
+                    color: AppColors.textSecondary,
                   ),
                 ),
 
@@ -209,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
+                                AlwaysStoppedAnimation<Color>(AppColors.textLight),
                           ),
                         )
                       : const Text(
@@ -226,9 +226,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Expanded(child: Divider()),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
+                      child: const Text(
                         '또는',
-                        style: TextStyle(color: Colors.grey.shade600),
+                        style: TextStyle(color: AppColors.textSecondary),
                       ),
                     ),
                     const Expanded(child: Divider()),

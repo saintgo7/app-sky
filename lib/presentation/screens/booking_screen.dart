@@ -79,7 +79,7 @@ class BookingScreen extends StatelessWidget {
           '항공편',
           Icons.flight,
           '진행 중',
-          Colors.blue,
+          AppColors.info,
         ),
         _buildBookingCard(
           '힐튼 도쿄',
@@ -87,7 +87,7 @@ class BookingScreen extends StatelessWidget {
           '호텔',
           Icons.hotel,
           '진행 중',
-          Colors.blue,
+          AppColors.info,
         ),
         _buildBookingCard(
           '후지산 투어',
@@ -95,7 +95,7 @@ class BookingScreen extends StatelessWidget {
           '액티비티',
           Icons.local_activity,
           '완료',
-          Colors.green,
+          AppColors.success,
         ),
         _buildBookingCard(
           '방콕 패키지',
@@ -103,7 +103,7 @@ class BookingScreen extends StatelessWidget {
           '패키지',
           Icons.card_travel,
           '완료',
-          Colors.green,
+          AppColors.success,
         ),
       ],
     );
@@ -123,8 +123,8 @@ class BookingScreen extends StatelessWidget {
         ),
         Text(
           label,
-          style: TextStyle(
-            color: Colors.grey.shade600,
+          style: const TextStyle(
+            color: AppColors.textSecondary,
           ),
         ),
       ],
@@ -169,8 +169,8 @@ class BookingScreen extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     date,
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
                       fontSize: 14,
                     ),
                   ),
@@ -211,15 +211,15 @@ class BookingScreen extends StatelessWidget {
           Icon(
             Icons.login,
             size: 80,
-            color: Colors.grey.shade400,
+            color: AppColors.textDisabled,
           ),
           const SizedBox(height: 16),
           Text(
             '예약 내역을 확인하려면\n로그인이 필요합니다',
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
-              color: Colors.grey.shade600,
+              color: AppColors.textSecondary,
             ),
           ),
           const SizedBox(height: 24),

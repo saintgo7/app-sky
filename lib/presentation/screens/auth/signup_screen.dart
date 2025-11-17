@@ -41,7 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('이용약관에 동의해주세요'),
-          backgroundColor: Colors.orange,
+          backgroundColor: AppColors.warning,
         ),
       );
       return;
@@ -65,7 +65,7 @@ class _SignupScreenState extends State<SignupScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('회원가입 성공!'),
-            backgroundColor: Colors.green,
+            backgroundColor: AppColors.success,
           ),
         );
         context.go('/');
@@ -73,7 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('회원가입 실패. 다시 시도해주세요.'),
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.danger,
           ),
         );
       }
@@ -121,9 +121,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 Text(
                   '새로운 계정을 만들어보세요',
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
-                    color: Colors.grey.shade600,
+                    color: AppColors.textSecondary,
                   ),
                 ),
 
@@ -298,7 +298,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
+                                AlwaysStoppedAnimation<Color>(AppColors.textLight),
                           ),
                         )
                       : const Text(
@@ -315,9 +315,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     const Expanded(child: Divider()),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
+                      child: const Text(
                         '또는',
-                        style: TextStyle(color: Colors.grey.shade600),
+                        style: TextStyle(color: AppColors.textSecondary),
                       ),
                     ),
                     const Expanded(child: Divider()),

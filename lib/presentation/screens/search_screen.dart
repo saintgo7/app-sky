@@ -121,13 +121,13 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.search, size: 64, color: Colors.grey.shade400),
+            Icon(Icons.search, size: 64, color: AppColors.textDisabled),
             const SizedBox(height: 16),
             Text(
               '검색어를 입력하세요',
               style: TextStyle(
                 fontSize: 18,
-                color: Colors.grey.shade600,
+                color: AppColors.textSecondary,
               ),
             ),
           ],

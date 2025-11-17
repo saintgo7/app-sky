@@ -44,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
                     authProvider.userName?.substring(0, 1).toUpperCase() ?? 'U',
                     style: const TextStyle(
                       fontSize: 32,
-                      color: Colors.white,
+                      color: AppColors.textLight,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -64,8 +64,8 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         authProvider.userEmail ?? '',
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
+                        style: const TextStyle(
+                          color: AppColors.textSecondary,
                           fontSize: 14,
                         ),
                       ),
@@ -167,7 +167,7 @@ class ProfileScreen extends StatelessWidget {
             }
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
+            backgroundColor: AppColors.danger,
             padding: const EdgeInsets.symmetric(vertical: 16),
           ),
           child: const Text('로그아웃'),
@@ -182,7 +182,7 @@ class ProfileScreen extends StatelessWidget {
           },
           child: const Text(
             '계정 삭제',
-            style: TextStyle(color: Colors.red),
+            style: TextStyle(color: AppColors.danger),
           ),
         ),
       ],
@@ -215,15 +215,15 @@ class ProfileScreen extends StatelessWidget {
           Icon(
             Icons.person_outline,
             size: 80,
-            color: Colors.grey.shade400,
+            color: AppColors.textDisabled,
           ),
           const SizedBox(height: 16),
           Text(
             '프로필을 확인하려면\n로그인이 필요합니다',
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
-              color: Colors.grey.shade600,
+              color: AppColors.textSecondary,
             ),
           ),
           const SizedBox(height: 24),
@@ -259,7 +259,7 @@ class ProfileScreen extends StatelessWidget {
               Navigator.pop(context);
               // Delete account logic
             },
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            style: TextButton.styleFrom(foregroundColor: AppColors.danger),
             child: const Text('삭제'),
           ),
         ],
