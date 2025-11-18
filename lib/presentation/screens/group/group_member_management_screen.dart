@@ -160,7 +160,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
         color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),

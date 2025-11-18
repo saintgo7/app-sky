@@ -97,7 +97,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.1),
+                color: AppColors.info.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.psychology, color: AppColors.info ,
@@ -174,7 +174,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
               color: AppColors.textLight 
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
+                  color: AppColors.textPrimary.withOpacity(0.05),
                   blurRadius: 10,
                   offset: const Offset(0, -5),
                 ),
@@ -231,7 +231,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
         children: [
           if (!isUser) ...[
             CircleAvatar(
-              backgroundColor: Colors.blue.shade100,
+              backgroundColor: AppColors.info.shade100,
               child: const Icon(Icons.smart_toy, color: AppColors.info ,
             ),
             const SizedBox(width: 8),
@@ -289,7 +289,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundColor: Colors.blue.shade100,
+            backgroundColor: AppColors.info.shade100,
             child: const Icon(Icons.smart_toy, color: AppColors.info ,
           ),
           const SizedBox(width: 8),
@@ -335,7 +335,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
           border: Border.all(color: AppColors.textDisabled),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: AppColors.textPrimary.withOpacity(0.05),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),

@@ -835,7 +835,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
                   children: [
                     Icon(
                       Icons.trending_up,
-                      color: Colors.purple,
+                      color: AppColors.primary,
                       size: 20,
                     ),
                     const SizedBox(width: 8),
@@ -1025,7 +1025,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
       case '식사':
         return  AppColors.warning 
       case '활동':
-        return Colors.purple;
+        return AppColors.primary;
       case '기타':
         return  AppColors.textSecondary 
       default:
@@ -1051,7 +1051,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
   Color _getStyleColor(TravelStyle style) {
     switch (style) {
       case TravelStyle.luxury:
-        return Colors.purple;
+        return AppColors.primary;
       case TravelStyle.cultural:
         return  AppColors.info 
       case TravelStyle.adventure:

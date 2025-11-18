@@ -145,7 +145,7 @@ class AdminDashboardScreen extends ConsumerWidget {
         value: '${data.aiStats.conversionRate.toStringAsFixed(1)}%',
         subtitle: '${NumberFormat('#,###').format(data.aiStats.acceptedRecommendations)} / ${NumberFormat('#,###').format(data.aiStats.totalRecommendations)}',
         icon: Icons.psychology,
-        color: Colors.purple,
+        color: AppColors.primary,
         trend: 0,
       ),
     ];

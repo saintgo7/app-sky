@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
@@ -198,7 +199,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
         color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -279,18 +280,18 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.orange.shade100,
+                      color: AppColors.warning.shade100,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.schedule, size: 16, color: Colors.orange.shade700),
+                        Icon(Icons.schedule, size: 16, color: AppColors.warning.shade700),
                         const SizedBox(width: 4),
                         Text(
                           '예약됨',
                           style: TextStyle(
-                            color: Colors.orange.shade700,
+                            color: AppColors.warning.shade700,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -363,13 +364,13 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: Colors.red.shade100,
+                      color: AppColors.danger.shade100,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       '미읽음 $unreadCount명',
                       style: TextStyle(
-                        color: Colors.red.shade700,
+                        color: AppColors.danger.shade700,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
@@ -379,13 +380,13 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
-                      color: Colors.green.shade100,
+                      color: AppColors.success.shade100,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       '모두 읽음',
                       style: TextStyle(
-                        color: Colors.green.shade700,
+                        color: AppColors.success.shade700,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
@@ -528,7 +529,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                   child: Text(
                     _generateMockMessage(index),
                     style: TextStyle(
-                      color: isMe ? AppColors.textLight : Colors.black,
+                      color: isMe ? AppColors.textLight : AppColors.textPrimary 
                     ),
                   ),
                 ),
@@ -570,7 +571,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
         color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, -2),
           ),
@@ -649,7 +650,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
         color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -696,13 +697,13 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: item.type == 'survey' ? Colors.blue.shade100 : Colors.green.shade100,
+                    color: item.type == 'survey' ? AppColors.info.shade100 : AppColors.success.shade100,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     item.type == 'survey' ? '설문' : '투표',
                     style: TextStyle(
-                      color: item.type == 'survey' ? Colors.blue.shade700 : Colors.green.shade700,
+                      color: item.type == 'survey' ? AppColors.info.shade700 : AppColors.success.shade700,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -982,7 +983,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
       case 'chat':
         return AppColors.success 
       case 'survey':
-        return Colors.purple;
+        return AppColors.primary;
       case 'vote':
         return AppColors.warning 
       default:

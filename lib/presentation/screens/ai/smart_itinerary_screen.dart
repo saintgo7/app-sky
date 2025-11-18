@@ -935,7 +935,7 @@ class ActivityCard extends StatelessWidget {
   Color _getCategoryColor(String category) {
     switch (category.toLowerCase()) {
       case 'cultural':
-        return Colors.purple;
+        return AppColors.primary;
       case 'culinary':
         return  AppColors.warning 
       case 'adventure':
@@ -943,7 +943,7 @@ class ActivityCard extends StatelessWidget {
       case 'wellness':
         return  AppColors.info 
       case 'shopping':
-        return Colors.pink;
+        return AppColors.secondary;
       default:
         return  AppColors.textSecondary 
     }
@@ -980,7 +980,7 @@ class TransportCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
+        color: AppColors.textSecondary.shade50,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(color: AppColors.textDisabled),
       ),

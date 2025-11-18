@@ -775,7 +775,7 @@ class _TypingIndicatorState extends State<TypingIndicator>
               height: 6,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.grey.withOpacity(_animations[index].value),
+                color: AppColors.textSecondary.withOpacity(_animations[index].value),
               ),
             );
           },

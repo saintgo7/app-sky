@@ -774,7 +774,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
         color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, -2),
           ),

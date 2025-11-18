@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -292,7 +293,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                 margin: const EdgeInsets.only(bottom: 8),
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade50,
+                  color: AppColors.textSecondary.shade50,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -331,7 +332,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: Colors.orange.withOpacity(0.1),
+                          color: AppColors.warning.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
@@ -523,9 +524,9 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
       return Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.blue.withOpacity(0.1),
+          color: AppColors.info.withOpacity(0.1),
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.blue.shade300),
+          border: Border.all(color: AppColors.info.shade300),
         ),
         child: Row(
           children: [
@@ -818,7 +819,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                               : '무료',
                           style: TextStyle(
                             color: entry.value['cost'] as int > 0
-                                ? Colors.orange
+                                ? AppColors.warning
                                 : AppColors.success 
                             fontWeight: FontWeight.bold,
                           ),
@@ -1230,7 +1231,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
         color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, -2),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -433,7 +434,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: discountRate > 0 ? Colors.green.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
+        color: discountRate > 0 ? AppColors.success.withOpacity(0.1) : AppColors.textSecondary.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: discountRate > 0 ? AppColors.success : AppColors.textDisabled,
@@ -469,9 +470,9 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.blue.withOpacity(0.1),
+        color: AppColors.info.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.blue.shade300),
+        border: Border.all(color: AppColors.info.shade300),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -579,7 +580,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
             decoration: BoxDecoration(
               color: isSelected 
                   ? Theme.of(context).primaryColor.withOpacity(0.1)
-                  : Colors.grey.withOpacity(0.05),
+                  : AppColors.textSecondary.withOpacity(0.05),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: isSelected 
@@ -811,7 +812,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.black54,
+                    color: AppColors.textPrimary.withOpacity(0.54),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
@@ -1014,7 +1015,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey.shade50,
+        color: AppColors.textSecondary.shade50,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

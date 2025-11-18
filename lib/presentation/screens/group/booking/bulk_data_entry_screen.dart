@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/constants/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
@@ -202,7 +203,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
                   style: BorderStyle.solid,
                 ),
                 borderRadius: BorderRadius.circular(8),
-                color: Colors.grey.shade50,
+                color: AppColors.textSecondary.shade50,
               ),
               child: Column(
                 children: [
@@ -248,17 +249,17 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.green.shade50,
-                  border: Border.all(color: Colors.green.shade200),
+                  color: AppColors.success.shade50,
+                  border: Border.all(color: AppColors.success.shade200),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.check_circle, color: Colors.green.shade600),
+                    Icon(Icons.check_circle, color: AppColors.success.shade600),
                     const SizedBox(width: 8),
                     Text(
                       'Excel 파일이 업로드되었습니다',
-                      style: TextStyle(color: Colors.green.shade700),
+                      style: TextStyle(color: AppColors.success.shade700),
                     ),
                   ],
                 ),
@@ -366,7 +367,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
               '${_getFieldLabel(field)}${isRequired ? ' *' : ''}',
               style: TextStyle(
                 fontWeight: isRequired ? FontWeight.bold : FontWeight.normal,
-                color: isRequired ? Colors.black : AppColors.textSecondary,
+                color: isRequired ? AppColors.textPrimary : AppColors.textSecondary,
               ),
             ),
           ),
@@ -522,7 +523,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
         color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -640,13 +641,13 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.red.shade100,
+                  color: AppColors.danger.shade100,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   '오류 ${participant.validationErrors.length}',
                   style: TextStyle(
-                    color: Colors.red.shade700,
+                    color: AppColors.danger.shade700,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -668,13 +669,13 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
                   return Container(
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                      color: Colors.red.shade50,
+                      color: AppColors.danger.shade50,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
                       error,
                       style: TextStyle(
-                        color: Colors.red.shade700,
+                        color: AppColors.danger.shade700,
                         fontSize: 11,
                       ),
                     ),
@@ -804,7 +805,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
         color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -879,7 +880,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
               Text(
                 '만료 임박!',
                 style: TextStyle(
-                  color: Colors.orange.shade700,
+                  color: AppColors.warning.shade700,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -898,7 +899,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
         color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, -2),
           ),
