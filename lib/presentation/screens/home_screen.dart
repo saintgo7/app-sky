@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () => context.go('/login'),
               child: const Text(
                 'Login',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: AppColors.textLight),
               ),
             ),
         ],
@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                     Icon(
                       Icons.flight_takeoff,
                       size: 48,
-                      color: Colors.white,
+                      color: AppColors.textLight,
                     ),
                     SizedBox(height: 16),
                     Text(
@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppColors.textLight,
                       ),
                     ),
                   ],
@@ -87,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                         const Text(
                           'Search destinations, hotels, flights...',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: AppColors.textHint,
                             fontSize: 16,
                           ),
                         ),
@@ -202,7 +202,7 @@ class HomeScreen extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: AppColors.primary,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: AppColors.textSecondary,
         currentIndex: 0,
         onTap: (index) {
           switch (index) {
@@ -282,8 +282,8 @@ class _FeatureCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     description,
-                    style: TextStyle(
-                      color: Colors.grey[600],
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
                     ),
                   ),
                 ],
