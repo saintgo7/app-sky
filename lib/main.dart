@@ -12,6 +12,10 @@ import 'presentation/screens/booking_screen.dart';
 import 'presentation/screens/profile_screen.dart';
 import 'presentation/screens/auth/login_screen.dart';
 import 'presentation/screens/auth/signup_screen.dart';
+import 'presentation/screens/ai/ai_consultation_screen.dart';
+import 'presentation/screens/ai/personalized_recommendation_screen.dart';
+import 'presentation/screens/package_comparison_screen.dart';
+import 'presentation/screens/package_details_screen.dart';
 
 void main() {
   runApp(const TravelMateApp());
@@ -79,6 +83,22 @@ class TravelMateApp extends StatelessWidget {
       GoRoute(
         path: '/profile',
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: '/ai-consultation',
+        builder: (context, state) => const AIConsultationScreen(),
+      ),
+      GoRoute(
+        path: '/personalized-recommendations',
+        builder: (context, state) => const PersonalizedRecommendationScreen(),
+      ),
+      GoRoute(
+        path: '/package-comparison',
+        builder: (context, state) => const PackageComparisonScreen(),
+      ),
+      GoRoute(
+        path: '/package-details',
+        builder: (context, state) => const PackageDetailsScreen(),
       ),
     ],
     errorBuilder: (context, state) => Scaffold(
