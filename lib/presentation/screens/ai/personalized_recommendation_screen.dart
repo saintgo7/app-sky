@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../core/constants/app_colors.dart';
 import '../../../services/ai/recommendation/recommendation_engine.dart';
 import '../../../services/ai/profiling/user_preference_analyzer.dart';
 import '../../../services/ai/profiling/travel_style_classifier.dart';
@@ -180,7 +181,7 @@ class _PersonalizedRecommendationScreenState
               Text(
                 '당신을 위한 특별한 추천',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Colors.white,
+                      color: AppColors.textLight,
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -190,7 +191,7 @@ class _PersonalizedRecommendationScreenState
               Text(
                 '개인화된 추천을 위해',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Colors.white,
+                      color: AppColors.textLight,
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -198,7 +199,7 @@ class _PersonalizedRecommendationScreenState
               Text(
                 'AI 컨설팅을 시작해보세요',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.white70,
+                      color: AppColors.textLight.withOpacity(0.7),
                     ),
               ),
             ],
@@ -231,10 +232,10 @@ class _PersonalizedRecommendationScreenState
         return Chip(
           label: Text(
             insight,
-            style: const TextStyle(color: Colors.white, fontSize: 12),
+            style: const TextStyle(color: AppColors.textLight, fontSize: 12),
           ),
-          backgroundColor: Colors.white.withOpacity(0.2),
-          side: const BorderSide(color: Colors.white54),
+          backgroundColor: AppColors.textLight.withOpacity(0.2),
+          side: BorderSide(color: AppColors.textLight.withOpacity(0.54)),
         );
       }).toList(),
     );
@@ -246,7 +247,7 @@ class _PersonalizedRecommendationScreenState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.travel_explore, size: 64, color: Colors.grey),
+            Icon(Icons.travel_explore, size: 64, color: AppColors.textSecondary),
             SizedBox(height: 16),
             Text('추천할 여행이 없습니다'),
             SizedBox(height: 8),
@@ -309,7 +310,7 @@ class _PersonalizedRecommendationScreenState
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.travel_explore, size: 64, color: Colors.grey),
+            const Icon(Icons.travel_explore, size: 64, color: AppColors.textSecondary),
             const SizedBox(height: 16),
             Text(emptyMessage),
           ],
@@ -370,7 +371,7 @@ class _PersonalizedRecommendationScreenState
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey,
+                color: AppColors.textSecondary,
               ),
         ),
       ],
@@ -559,7 +560,7 @@ class RecommendationCard extends StatelessWidget {
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
-                        color: Colors.grey.shade300,
+                        color: AppColors.textDisabled,
                         child: const Icon(Icons.image, size: 64),
                       );
                     },
@@ -571,7 +572,7 @@ class RecommendationCard extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.black54,
+                      color: AppColors.textPrimary.withOpacity(0.54),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(
@@ -582,7 +583,7 @@ class RecommendationCard extends StatelessWidget {
                         Text(
                           '${(recommendation.matchScore * 100).toInt()}%',
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: AppColors.textLight,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -603,7 +604,7 @@ class RecommendationCard extends StatelessWidget {
                     child: Text(
                       _getReasonLabel(recommendation.recommendationReason),
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textLight,
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
@@ -628,21 +629,21 @@ class RecommendationCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      Icon(Icons.location_on, size: 16, color: Colors.grey.shade600),
+                      const Icon(Icons.location_on, size: 16, color: AppColors.textSecondary),
                       const SizedBox(width: 4),
                       Text(
                         recommendation.destination,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey.shade600,
+                              color: AppColors.textSecondary,
                             ),
                       ),
                       const Spacer(),
-                      Icon(Icons.access_time, size: 16, color: Colors.grey.shade600),
+                      const Icon(Icons.access_time, size: 16, color: AppColors.textSecondary),
                       const SizedBox(width: 4),
                       Text(
                         '${recommendation.duration}일',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey.shade600,
+                              color: AppColors.textSecondary,
                             ),
                       ),
                     ],
@@ -689,19 +690,19 @@ class RecommendationCard extends StatelessWidget {
   Color _getReasonColor(RecommendationReason reason) {
     switch (reason) {
       case RecommendationReason.personalPreference:
-        return Colors.blue;
+        return AppColors.info;
       case RecommendationReason.similarUsers:
-        return Colors.green;
+        return AppColors.success;
       case RecommendationReason.trending:
-        return Colors.orange;
+        return AppColors.warning;
       case RecommendationReason.newContent:
-        return Colors.purple;
+        return AppColors.primary;
       case RecommendationReason.priceMatch:
-        return Colors.red;
+        return AppColors.danger;
       case RecommendationReason.locationBased:
-        return Colors.teal;
+        return AppColors.info;
       default:
-        return Colors.grey;
+        return AppColors.textSecondary;
     }
   }
 

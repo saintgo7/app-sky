@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
@@ -94,7 +95,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
       appBar: AppBar(
         title: Text(widget.existingGroup != null ? '단체 계정 수정' : '단체 계정 생성'),
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.textLight 
         bottom: TabBar(
           controller: _tabController,
           tabs: const [
@@ -171,7 +172,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
             Text(
               _getTypeDescription(_selectedType),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey.shade600,
+                    color: AppColors.textSecondary,
                   ),
             ),
           ],
@@ -390,7 +391,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
             const Divider(),
             Row(
               children: [
-                Icon(Icons.info, color: Colors.blue, size: 20),
+                Icon(Icons.info, color: AppColors.info  size: 20),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -413,7 +414,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
         children: [
           Icon(
             isRequired ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: isRequired ? Colors.green : Colors.grey,
+            color: isRequired ? AppColors.success : AppColors.textSecondary 
             size: 20,
           ),
           const SizedBox(width: 8),
@@ -430,7 +431,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
                 Text(
                   description,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey.shade600,
+                        color: AppColors.textSecondary,
                       ),
                 ),
               ],
@@ -460,7 +461,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Colors.grey.shade300,
+                  color: AppColors.textDisabled,
                   style: BorderStyle.solid,
                 ),
                 borderRadius: BorderRadius.circular(8),
@@ -470,7 +471,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
                   Icon(
                     Icons.cloud_upload,
                     size: 48,
-                    color: Colors.grey.shade400,
+                    color: AppColors.textDisabled,
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -481,7 +482,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
                   Text(
                     'PDF, JPG, PNG 파일 (최대 5MB)',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.grey.shade600,
+                          color: AppColors.textSecondary,
                         ),
                   ),
                   const SizedBox(height: 16),
@@ -533,17 +534,17 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
             _buildStatusItem(
               '기본 정보',
               widget.existingGroup != null ? '완료' : '대기',
-              widget.existingGroup != null ? Colors.green : Colors.orange,
+              widget.existingGroup != null ? AppColors.success : AppColors.warning 
             ),
             _buildStatusItem(
               '서류 업로드',
               _verificationDocuments?.isNotEmpty == true ? '완료' : '대기',
-              _verificationDocuments?.isNotEmpty == true ? Colors.green : Colors.grey,
+              _verificationDocuments?.isNotEmpty == true ? AppColors.success : AppColors.textSecondary 
             ),
             _buildStatusItem(
               '관리자 승인',
               '대기',
-              Colors.grey,
+              AppColors.textSecondary 
             ),
           ],
         ),
@@ -770,7 +771,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -992,7 +993,7 @@ class _GroupAccountScreenState extends State<GroupAccountScreen>
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(widget.existingGroup != null ? '단체 계정이 수정되었습니다' : '단체 계정이 생성되었습니다'),
-            backgroundColor: Colors.green,
+            backgroundColor: AppColors.success 
           ),
         );
         Navigator.pop(context, true);

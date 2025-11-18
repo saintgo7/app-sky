@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../providers/admin_auth_provider.dart';
@@ -377,22 +378,22 @@ class _ProductManagementScreenState extends ConsumerState<ProductManagementScree
 
     switch (status) {
       case 'active':
-        color = Colors.green;
+        color =  AppColors.success 
         label = '활성';
         icon = Icons.check_circle;
         break;
       case 'inactive':
-        color = Colors.grey;
+        color =  AppColors.textSecondary 
         label = '비활성';
         icon = Icons.cancel;
         break;
       case 'soldout':
-        color = Colors.red;
+        color =  AppColors.danger 
         label = '품절';
         icon = Icons.remove_circle;
         break;
       default:
-        color = Colors.grey;
+        color =  AppColors.textSecondary 
         label = status;
         icon = Icons.help;
     }
@@ -448,7 +449,7 @@ class _ProductManagementScreenState extends ConsumerState<ProductManagementScree
             width: 120,
             child: Text(
               label,
-              style: const TextStyle(color: Colors.grey),
+              style: const TextStyle(color:  AppColors.textSecondary ,
             ),
           ),
           Expanded(

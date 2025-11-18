@@ -71,7 +71,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
       appBar: AppBar(
         title: Text(_groupInfo?.name ?? '단체 대시보드'),
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.textLight 
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -172,17 +172,17 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
             const SizedBox(height: 16),
             Row(
               children: [
-                Expanded(child: _buildStatCard('총 예약', '${_stats.totalBookings}건', Icons.business_center, Colors.blue)),
+                Expanded(child: _buildStatCard('총 예약', '${_stats.totalBookings}건', Icons.business_center, AppColors.info ),
                 const SizedBox(width: 8),
-                Expanded(child: _buildStatCard('활성 멤버', '${_stats.activeMembers}명', Icons.people, Colors.green)),
+                Expanded(child: _buildStatCard('활성 멤버', '${_stats.activeMembers}명', Icons.people, AppColors.success ),
               ],
             ),
             const SizedBox(height: 8),
             Row(
               children: [
-                Expanded(child: _buildStatCard('이번 달 매출', '${_formatCurrency(_stats.monthlyRevenue)}', Icons.attach_money, Colors.orange)),
+                Expanded(child: _buildStatCard('이번 달 매출', '${_formatCurrency(_stats.monthlyRevenue)}', Icons.attach_money, AppColors.warning ),
                 const SizedBox(width: 8),
-                Expanded(child: _buildStatCard('대기 중', '${_stats.pendingTasks}개', Icons.pending, Colors.red)),
+                Expanded(child: _buildStatCard('대기 중', '${_stats.pendingTasks}개', Icons.pending, AppColors.danger ),
               ],
             ),
           ],
@@ -253,14 +253,14 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
                 contentPadding: EdgeInsets.zero,
                 leading: CircleAvatar(
                   backgroundColor: activity.color,
-                  child: Icon(activity.icon, color: Colors.white, size: 16),
+                  child: Icon(activity.icon, color: AppColors.textLight  size: 16),
                 ),
                 title: Text(activity.title, style: const TextStyle(fontSize: 14)),
                 subtitle: Text(activity.subtitle, style: const TextStyle(fontSize: 12)),
                 trailing: Text(
                   activity.time,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey,
+                        color: AppColors.textSecondary 
                       ),
                 ),
               );
@@ -290,7 +290,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.shade300),
+                  border: Border.all(color: AppColors.textDisabled),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -384,7 +384,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
       borderRadius: BorderRadius.circular(8),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: AppColors.textDisabled),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -429,7 +429,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -469,7 +469,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.business_center_outlined, size: 64, color: Colors.grey),
+          const Icon(Icons.business_center_outlined, size: 64, color: AppColors.textSecondary ,
           const SizedBox(height: 16),
           Text(
             '활성 예약이 없습니다',
@@ -479,7 +479,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
           Text(
             '새로운 여행 예약을 생성해보세요',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey,
+                  color: AppColors.textSecondary 
                 ),
           ),
           const SizedBox(height: 16),
@@ -535,11 +535,11 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
             const SizedBox(height: 12),
             Row(
               children: [
-                Icon(Icons.people, size: 16, color: Colors.grey.shade600),
+                Icon(Icons.people, size: 16, color: AppColors.textSecondary),
                 const SizedBox(width: 4),
                 Text('${booking.totalParticipants}명'),
                 const SizedBox(width: 16),
-                Icon(Icons.calendar_today, size: 16, color: Colors.grey.shade600),
+                Icon(Icons.calendar_today, size: 16, color: AppColors.textSecondary),
                 const SizedBox(width: 4),
                 Text('${_formatDate(booking.travelStartDate)} - ${_formatDate(booking.travelEndDate)}'),
               ],
@@ -547,7 +547,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
             const SizedBox(height: 8),
             Row(
               children: [
-                Icon(Icons.attach_money, size: 16, color: Colors.grey.shade600),
+                Icon(Icons.attach_money, size: 16, color: AppColors.textSecondary),
                 const SizedBox(width: 4),
                 Text(_formatCurrency(booking.pricing.totalPrice)),
                 const Spacer(),
@@ -555,7 +555,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
                   Text(
                     'D-$daysUntilTravel',
                     style: TextStyle(
-                      color: daysUntilTravel <= 7 ? Colors.red : Colors.orange,
+                      color: daysUntilTravel <= 7 ? AppColors.danger : AppColors.warning 
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -609,7 +609,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -652,7 +652,7 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
           backgroundColor: _getRoleColor(member.role),
           child: Text(
             member.name.isNotEmpty ? member.name[0] : 'U',
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: AppColors.textLight  fontWeight: FontWeight.bold),
           ),
         ),
         title: Text(member.name),
@@ -675,19 +675,19 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
     
     switch (status) {
       case MemberStatus.active:
-        color = Colors.green;
+        color = AppColors.success 
         label = '활성';
         break;
       case MemberStatus.inactive:
-        color = Colors.grey;
+        color = AppColors.textSecondary 
         label = '비활성';
         break;
       case MemberStatus.suspended:
-        color = Colors.red;
+        color = AppColors.danger 
         label = '정지';
         break;
       case MemberStatus.pending:
-        color = Colors.orange;
+        color = AppColors.warning 
         label = '대기';
         break;
     }
@@ -852,10 +852,10 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
                   ),
             ),
             const SizedBox(height: 16),
-            _buildMetricRow('평균 예약 금액', _formatCurrency(_stats.averageBookingAmount), '전월 대비 +12%', Colors.green),
-            _buildMetricRow('예약 완료율', '${_stats.bookingCompletionRate.toStringAsFixed(1)}%', '전월 대비 +2.3%', Colors.green),
-            _buildMetricRow('멤버 참여율', '${_stats.memberEngagementRate.toStringAsFixed(1)}%', '전월 대비 -1.2%', Colors.red),
-            _buildMetricRow('고객 만족도', '${_stats.customerSatisfactionScore}/5.0', '전월 대비 +0.2', Colors.green),
+            _buildMetricRow('평균 예약 금액', _formatCurrency(_stats.averageBookingAmount), '전월 대비 +12%', AppColors.success ,
+            _buildMetricRow('예약 완료율', '${_stats.bookingCompletionRate.toStringAsFixed(1)}%', '전월 대비 +2.3%', AppColors.success ,
+            _buildMetricRow('멤버 참여율', '${_stats.memberEngagementRate.toStringAsFixed(1)}%', '전월 대비 -1.2%', AppColors.danger ,
+            _buildMetricRow('고객 만족도', '${_stats.customerSatisfactionScore}/5.0', '전월 대비 +0.2', AppColors.success ,
           ],
         ),
       ),
@@ -902,15 +902,15 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
   Color _getBookingStatusColor(String status) {
     switch (status) {
       case 'confirmed':
-        return Colors.green;
+        return AppColors.success 
       case 'pending':
-        return Colors.orange;
+        return AppColors.warning 
       case 'cancelled':
-        return Colors.red;
+        return AppColors.danger 
       case 'completed':
-        return Colors.blue;
+        return AppColors.info 
       default:
-        return Colors.grey;
+        return AppColors.textSecondary 
     }
   }
 
@@ -932,15 +932,15 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
   Color _getRoleColor(GroupRole role) {
     switch (role) {
       case GroupRole.admin:
-        return Colors.red;
+        return AppColors.danger 
       case GroupRole.manager:
-        return Colors.orange;
+        return AppColors.warning 
       case GroupRole.coordinator:
-        return Colors.blue;
+        return AppColors.info 
       case GroupRole.member:
-        return Colors.green;
+        return AppColors.success 
       case GroupRole.viewer:
-        return Colors.grey;
+        return AppColors.textSecondary 
     }
   }
 
@@ -966,21 +966,21 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
         subtitle: '제주도 3박 4일 - 김철수',
         time: '10분 전',
         icon: Icons.business_center,
-        color: Colors.blue,
+        color: AppColors.info 
       ),
       ActivityModel(
         title: '멤버가 초대를 수락했습니다',
         subtitle: '이영희 - 마케팅팀',
         time: '1시간 전',
         icon: Icons.person_add,
-        color: Colors.green,
+        color: AppColors.success 
       ),
       ActivityModel(
         title: '공지사항이 발송되었습니다',
         subtitle: '여행 준비물 안내',
         time: '2시간 전',
         icon: Icons.campaign,
-        color: Colors.orange,
+        color: AppColors.warning 
       ),
     ];
   }
@@ -992,21 +992,21 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
         description: '32명 참가',
         date: '12/25',
         time: '07:00',
-        color: Colors.blue,
+        color: AppColors.info 
       ),
       EventModel(
         title: '부산 여행 최종 점검',
         description: '문서 확인 필요',
         date: '12/28',
         time: '14:00',
-        color: Colors.orange,
+        color: AppColors.warning 
       ),
       EventModel(
         title: '신규 멤버 오리엔테이션',
         description: '5명 참석 예정',
         date: '01/03',
         time: '10:00',
-        color: Colors.green,
+        color: AppColors.success 
       ),
     ];
   }
@@ -1025,25 +1025,25 @@ class _GroupDashboardScreenState extends State<GroupDashboardScreen>
   List<PieChartSectionData> _generatePieChartData() {
     return [
       PieChartSectionData(
-        color: Colors.blue,
+        color: AppColors.info 
         value: 40,
         title: '숙박\n40%',
         radius: 80,
       ),
       PieChartSectionData(
-        color: Colors.red,
+        color: AppColors.danger 
         value: 30,
         title: '교통\n30%',
         radius: 80,
       ),
       PieChartSectionData(
-        color: Colors.green,
+        color: AppColors.success 
         value: 20,
         title: '식사\n20%',
         radius: 80,
       ),
       PieChartSectionData(
-        color: Colors.orange,
+        color: AppColors.warning 
         value: 10,
         title: '기타\n10%',
         radius: 80,

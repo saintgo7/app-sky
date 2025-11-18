@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -273,7 +274,7 @@ class _SmartItineraryScreenState extends State<SmartItineraryScreen>
                   child: Text(
                     '$_duration일',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color:  AppColors.textLight 
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -432,7 +433,7 @@ class _SmartItineraryScreenState extends State<SmartItineraryScreen>
                               const Spacer(),
                               LinearProgressIndicator(
                                 value: alternative.feasibilityScore,
-                                backgroundColor: Colors.grey.shade300,
+                                backgroundColor: AppColors.textDisabled,
                               ),
                               const SizedBox(height: 4),
                               Text(
@@ -460,7 +461,7 @@ class _SmartItineraryScreenState extends State<SmartItineraryScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.schedule, size: 64, color: Colors.grey),
+            Icon(Icons.schedule, size: 64, color:  AppColors.textSecondary ,
             SizedBox(height: 16),
             Text('아직 생성된 일정이 없습니다'),
             SizedBox(height: 8),
@@ -517,7 +518,7 @@ class _SmartItineraryScreenState extends State<SmartItineraryScreen>
                 child: Text(
                   '${(_currentItinerary!.feasibilityScore * 100).toInt()}%',
                   style: const TextStyle(
-                    color: Colors.white,
+                    color:  AppColors.textLight 
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
@@ -565,7 +566,7 @@ class _SmartItineraryScreenState extends State<SmartItineraryScreen>
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.grey,
+                  color:  AppColors.textSecondary 
                 ),
           ),
         ],
@@ -594,7 +595,7 @@ class _SmartItineraryScreenState extends State<SmartItineraryScreen>
                       child: Text(
                         '${day.dayNumber}',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color:  AppColors.textLight 
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -613,7 +614,7 @@ class _SmartItineraryScreenState extends State<SmartItineraryScreen>
                           Text(
                             day.theme,
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Colors.grey.shade600,
+                                  color: AppColors.textSecondary,
                                 ),
                           ),
                         ],
@@ -632,7 +633,7 @@ class _SmartItineraryScreenState extends State<SmartItineraryScreen>
                         Text(
                           '${day.totalDuration.inHours}시간',
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: Colors.grey.shade600,
+                                color: AppColors.textSecondary,
                               ),
                         ),
                       ],
@@ -671,10 +672,10 @@ class _SmartItineraryScreenState extends State<SmartItineraryScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color:  AppColors.textLight 
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: AppColors.textPrimary.withOpacity(0.1),
             blurRadius: 4,
             offset: const Offset(0, -2),
           ),
@@ -881,7 +882,7 @@ class ActivityCard extends StatelessWidget {
                 ),
                 child: Icon(
                   _getCategoryIcon(activity.category),
-                  color: Colors.white,
+                  color:  AppColors.textLight 
                 ),
               ),
               const SizedBox(width: 16),
@@ -905,7 +906,7 @@ class ActivityCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Icon(Icons.access_time, size: 16, color: Colors.grey.shade600),
+                        Icon(Icons.access_time, size: 16, color: AppColors.textSecondary),
                         const SizedBox(width: 4),
                         Text(
                           '${activity.estimatedDuration.inHours}시간 ${activity.estimatedDuration.inMinutes % 60}분',
@@ -936,15 +937,15 @@ class ActivityCard extends StatelessWidget {
       case 'cultural':
         return Colors.purple;
       case 'culinary':
-        return Colors.orange;
+        return  AppColors.warning 
       case 'adventure':
-        return Colors.green;
+        return  AppColors.success 
       case 'wellness':
-        return Colors.blue;
+        return  AppColors.info 
       case 'shopping':
         return Colors.pink;
       default:
-        return Colors.grey;
+        return  AppColors.textSecondary 
     }
   }
 
@@ -981,7 +982,7 @@ class TransportCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.grey.shade50,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: AppColors.textDisabled),
       ),
       child: Row(
         children: [
@@ -1001,7 +1002,7 @@ class TransportCard extends StatelessWidget {
                 Text(
                   '${segment.duration.inMinutes}분 • ₩${segment.cost.toStringAsFixed(0)}',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey.shade600,
+                        color: AppColors.textSecondary,
                       ),
                 ),
               ],
@@ -1053,7 +1054,7 @@ class ActivityDetailsSheet extends StatelessWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
+                    color: AppColors.textDisabled,
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -1122,7 +1123,7 @@ class ActivityDetailsSheet extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: Colors.grey.shade600),
+          Icon(icon, size: 20, color: AppColors.textSecondary),
           const SizedBox(width: 12),
           Text(
             '$label: ',

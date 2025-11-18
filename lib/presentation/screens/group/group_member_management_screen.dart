@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:file_picker/file_picker.dart';
@@ -72,7 +73,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
       appBar: AppBar(
         title: const Text('구성원 관리'),
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.textLight 
         actions: [
           IconButton(
             icon: const Icon(Icons.person_add),
@@ -156,7 +157,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -185,7 +186,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
                 borderRadius: BorderRadius.circular(8),
               ),
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: AppColors.background,
             ),
             onChanged: (value) {
               setState(() => _searchQuery = value);
@@ -234,7 +235,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: AppColors.textDisabled),
           borderRadius: BorderRadius.circular(16),
           color: value != '전체' ? Theme.of(context).primaryColor.withOpacity(0.1) : null,
         ),
@@ -252,7 +253,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
             Icon(
               Icons.arrow_drop_down,
               size: 16,
-              color: value != '전체' ? Theme.of(context).primaryColor : Colors.grey,
+              color: value != '전체' ? Theme.of(context).primaryColor : AppColors.textSecondary 
             ),
           ],
         ),
@@ -268,7 +269,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.people_outline, size: 64, color: Colors.grey),
+            const Icon(Icons.people_outline, size: 64, color: AppColors.textSecondary ,
             const SizedBox(height: 16),
             Text(
               _searchQuery.isNotEmpty || _hasActiveFilters()
@@ -282,7 +283,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
                   ? '검색어나 필터를 변경해보세요'
                   : '새 구성원을 초대해보세요',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey,
+                    color: AppColors.textSecondary 
                   ),
             ),
             const SizedBox(height: 16),
@@ -332,7 +333,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
           backgroundColor: _getRoleColor(member.role),
           child: Text(
             member.name.isNotEmpty ? member.name[0] : 'U',
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: AppColors.textLight  fontWeight: FontWeight.bold),
           ),
         ),
         title: Row(
@@ -353,14 +354,14 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
             const SizedBox(height: 4),
             Row(
               children: [
-                Icon(Icons.business, size: 14, color: Colors.grey),
+                Icon(Icons.business, size: 14, color: AppColors.textSecondary ,
                 const SizedBox(width: 4),
                 Text(
                   department.name,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(width: 16),
-                Icon(Icons.admin_panel_settings, size: 14, color: Colors.grey),
+                Icon(Icons.admin_panel_settings, size: 14, color: AppColors.textSecondary ,
                 const SizedBox(width: 4),
                 Text(
                   _getRoleLabel(member.role),
@@ -373,7 +374,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
               Text(
                 member.position,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey,
+                      color: AppColors.textSecondary 
                     ),
               ),
             ],
@@ -427,9 +428,9 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
               value: 'remove',
               child: Row(
                 children: [
-                  Icon(Icons.delete, color: Colors.red),
+                  Icon(Icons.delete, color: AppColors.danger ,
                   SizedBox(width: 8),
-                  Text('제거', style: TextStyle(color: Colors.red)),
+                  Text('제거', style: TextStyle(color: AppColors.danger ),
                 ],
               ),
             ),
@@ -447,19 +448,19 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
     
     switch (status) {
       case MemberStatus.active:
-        color = Colors.green;
+        color = AppColors.success 
         label = '활성';
         break;
       case MemberStatus.inactive:
-        color = Colors.grey;
+        color = AppColors.textSecondary 
         label = '비활성';
         break;
       case MemberStatus.suspended:
-        color = Colors.red;
+        color = AppColors.danger 
         label = '정지';
         break;
       case MemberStatus.pending:
-        color = Colors.orange;
+        color = AppColors.warning 
         label = '대기';
         break;
     }
@@ -493,7 +494,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.mail_outline, size: 64, color: Colors.grey),
+            const Icon(Icons.mail_outline, size: 64, color: AppColors.textSecondary ,
             const SizedBox(height: 16),
             Text(
               _searchQuery.isNotEmpty ? '조건에 맞는 초대가 없습니다' : '보낸 초대가 없습니다',
@@ -503,7 +504,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
             Text(
               _searchQuery.isNotEmpty ? '검색어를 변경해보세요' : '새 구성원을 초대해보세요',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey,
+                    color: AppColors.textSecondary 
                   ),
             ),
           ],
@@ -544,7 +545,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
           backgroundColor: _getInvitationStatusColor(invitation.status),
           child: Icon(
             _getInvitationStatusIcon(invitation.status),
-            color: Colors.white,
+            color: AppColors.textLight 
           ),
         ),
         title: Row(
@@ -560,14 +561,14 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
             const SizedBox(height: 4),
             Row(
               children: [
-                Icon(Icons.business, size: 14, color: Colors.grey),
+                Icon(Icons.business, size: 14, color: AppColors.textSecondary ,
                 const SizedBox(width: 4),
                 Text(
                   department.name,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(width: 16),
-                Icon(Icons.admin_panel_settings, size: 14, color: Colors.grey),
+                Icon(Icons.admin_panel_settings, size: 14, color: AppColors.textSecondary ,
                 const SizedBox(width: 4),
                 Text(
                   _getRoleLabel(invitation.role),
@@ -578,12 +579,12 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
             const SizedBox(height: 2),
             Row(
               children: [
-                Icon(Icons.schedule, size: 14, color: Colors.grey),
+                Icon(Icons.schedule, size: 14, color: AppColors.textSecondary ,
                 const SizedBox(width: 4),
                 Text(
                   '${_formatDate(invitation.invitedAt)} 초대',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey,
+                        color: AppColors.textSecondary 
                       ),
                 ),
                 if (invitation.status == 'pending') ...[
@@ -591,7 +592,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
                   Text(
                     '(${_getDaysUntilExpiry(invitation)}일 남음)',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Colors.orange,
+                          color: AppColors.warning 
                         ),
                   ),
                 ],
@@ -627,9 +628,9 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
               value: 'cancel',
               child: Row(
                 children: [
-                  Icon(Icons.cancel, color: Colors.red),
+                  Icon(Icons.cancel, color: AppColors.danger ,
                   SizedBox(width: 8),
-                  Text('취소', style: TextStyle(color: Colors.red)),
+                  Text('취소', style: TextStyle(color: AppColors.danger ),
                 ],
               ),
             ),
@@ -646,23 +647,23 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
     
     switch (status) {
       case 'pending':
-        color = Colors.orange;
+        color = AppColors.warning 
         label = '대기중';
         break;
       case 'accepted':
-        color = Colors.green;
+        color = AppColors.success 
         label = '수락됨';
         break;
       case 'rejected':
-        color = Colors.red;
+        color = AppColors.danger 
         label = '거절됨';
         break;
       case 'expired':
-        color = Colors.grey;
+        color = AppColors.textSecondary 
         label = '만료됨';
         break;
       default:
-        color = Colors.grey;
+        color = AppColors.textSecondary 
         label = status;
     }
 
@@ -692,8 +693,8 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
           return Card(
             child: ListTile(
               leading: const CircleAvatar(
-                backgroundColor: Colors.grey,
-                child: Icon(Icons.add, color: Colors.white),
+                backgroundColor: AppColors.textSecondary 
+                child: Icon(Icons.add, color: AppColors.textLight ,
               ),
               title: const Text('새 부서 추가'),
               subtitle: const Text('새로운 부서를 생성합니다'),
@@ -719,7 +720,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
           backgroundColor: Theme.of(context).primaryColor,
           child: Text(
             department.name.isNotEmpty ? department.name[0] : 'D',
-            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            style: const TextStyle(color: AppColors.textLight  fontWeight: FontWeight.bold),
           ),
         ),
         title: Text(
@@ -734,7 +735,7 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
             const SizedBox(height: 4),
             Row(
               children: [
-                Icon(Icons.people, size: 14, color: Colors.grey),
+                Icon(Icons.people, size: 14, color: AppColors.textSecondary ,
                 const SizedBox(width: 4),
                 Text(
                   '$memberCount명',
@@ -771,9 +772,9 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
                 value: 'delete',
                 child: Row(
                   children: [
-                    Icon(Icons.delete, color: Colors.red),
+                    Icon(Icons.delete, color: AppColors.danger ,
                     SizedBox(width: 8),
-                    Text('삭제', style: TextStyle(color: Colors.red)),
+                    Text('삭제', style: TextStyle(color: AppColors.danger ),
                   ],
                 ),
               ),
@@ -820,15 +821,15 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
   Color _getRoleColor(GroupRole role) {
     switch (role) {
       case GroupRole.admin:
-        return Colors.red;
+        return AppColors.danger 
       case GroupRole.manager:
-        return Colors.orange;
+        return AppColors.warning 
       case GroupRole.coordinator:
-        return Colors.blue;
+        return AppColors.info 
       case GroupRole.member:
-        return Colors.green;
+        return AppColors.success 
       case GroupRole.viewer:
-        return Colors.grey;
+        return AppColors.textSecondary 
     }
   }
 
@@ -850,15 +851,15 @@ class _GroupMemberManagementScreenState extends State<GroupMemberManagementScree
   Color _getInvitationStatusColor(String status) {
     switch (status) {
       case 'pending':
-        return Colors.orange;
+        return AppColors.warning 
       case 'accepted':
-        return Colors.green;
+        return AppColors.success 
       case 'rejected':
-        return Colors.red;
+        return AppColors.danger 
       case 'expired':
-        return Colors.grey;
+        return AppColors.textSecondary 
       default:
-        return Colors.grey;
+        return AppColors.textSecondary 
     }
   }
 

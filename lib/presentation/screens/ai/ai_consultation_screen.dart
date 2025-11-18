@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../../services/ai/recommendation/dialogflow_service.dart';
@@ -211,7 +212,7 @@ class _AIConsultationScreenState extends State<AIConsultationScreen>
       appBar: AppBar(
         title: const Text('AI 여행 컨설턴트'),
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor:  AppColors.textLight 
         elevation: 2,
         actions: [
           IconButton(
@@ -245,7 +246,7 @@ class _AIConsultationScreenState extends State<AIConsultationScreen>
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor.withOpacity(0.1),
         border: Border(
-          bottom: BorderSide(color: Colors.grey.shade300),
+          bottom: BorderSide(color: AppColors.textDisabled),
         ),
       ),
       child: Row(
@@ -275,7 +276,7 @@ class _AIConsultationScreenState extends State<AIConsultationScreen>
               child: Text(
                 '${(_calculateAverageConfidence() * 100).toInt()}%',
                 style: const TextStyle(
-                  color: Colors.white,
+                  color:  AppColors.textLight 
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -319,14 +320,14 @@ class _AIConsultationScreenState extends State<AIConsultationScreen>
         children: [
           const CircleAvatar(
             radius: 16,
-            backgroundColor: Colors.blue,
-            child: Icon(Icons.smart_toy, color: Colors.white, size: 16),
+            backgroundColor:  AppColors.info 
+            child: Icon(Icons.smart_toy, color:  AppColors.textLight  size: 16),
           ),
           const SizedBox(width: 12),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.grey.shade200,
+              color: AppColors.textDisabled,
               borderRadius: BorderRadius.circular(20),
             ),
             child: const TypingIndicator(),
@@ -340,11 +341,11 @@ class _AIConsultationScreenState extends State<AIConsultationScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Colors.grey.shade300)),
+        color:  AppColors.textLight 
+        border: Border(top: BorderSide(color: AppColors.textDisabled)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: AppColors.textPrimary.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),
@@ -367,7 +368,7 @@ class _AIConsultationScreenState extends State<AIConsultationScreen>
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: Colors.grey.shade100,
+                fillColor: AppColors.background,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 12,
@@ -569,8 +570,8 @@ class ChatBubble extends StatelessWidget {
           if (!message.isUser) ...[
             const CircleAvatar(
               radius: 16,
-              backgroundColor: Colors.blue,
-              child: Icon(Icons.smart_toy, color: Colors.white, size: 16),
+              backgroundColor:  AppColors.info 
+              child: Icon(Icons.smart_toy, color:  AppColors.textLight  size: 16),
             ),
             const SizedBox(width: 8),
           ],
@@ -585,13 +586,13 @@ class ChatBubble extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: message.isUser
                         ? Theme.of(context).primaryColor
-                        : Colors.grey.shade200,
+                        : AppColors.textDisabled,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(
                     message.text,
                     style: TextStyle(
-                      color: message.isUser ? Colors.white : Colors.black87,
+                      color: message.isUser ?  AppColors.textLight :  AppColors.textPrimary,
                     ),
                   ),
                 ),
@@ -611,7 +612,7 @@ class ChatBubble extends StatelessWidget {
                 Text(
                   _formatTime(message.timestamp),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey,
+                        color:  AppColors.textSecondary 
                       ),
                 ),
               ],
@@ -622,7 +623,7 @@ class ChatBubble extends StatelessWidget {
             CircleAvatar(
               radius: 16,
               backgroundColor: Theme.of(context).primaryColor,
-              child: const Icon(Icons.person, color: Colors.white, size: 16),
+              child: const Icon(Icons.person, color:  AppColors.textLight  size: 16),
             ),
           ],
         ],
@@ -684,7 +685,7 @@ class ChatBubble extends StatelessWidget {
                     return Container(
                       width: 60,
                       height: 60,
-                      color: Colors.grey.shade300,
+                      color: AppColors.textDisabled,
                       child: const Icon(Icons.image),
                     );
                   },
@@ -699,7 +700,7 @@ class ChatBubble extends StatelessWidget {
                     '₩${recommendation.price.toStringAsFixed(0)}',
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.blue,
+                      color:  AppColors.info 
                     ),
                   ),
                 ],

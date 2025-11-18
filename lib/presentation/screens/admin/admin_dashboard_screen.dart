@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
@@ -120,7 +121,7 @@ class AdminDashboardScreen extends ConsumerWidget {
         value: data.bookingStats.todayBookings.toString(),
         subtitle: '전일 대비 ${data.bookingStats.bookingGrowthRate > 0 ? '+' : ''}${data.bookingStats.bookingGrowthRate.toStringAsFixed(1)}%',
         icon: Icons.calendar_today,
-        color: Colors.blue,
+        color:  AppColors.info 
         trend: data.bookingStats.bookingGrowthRate,
       ),
       _StatCard(
@@ -128,7 +129,7 @@ class AdminDashboardScreen extends ConsumerWidget {
         value: NumberFormat.currency(locale: 'ko_KR', symbol: '₩').format(data.revenueStats.todayRevenue),
         subtitle: '전일 대비 ${data.revenueStats.revenueGrowthRate > 0 ? '+' : ''}${data.revenueStats.revenueGrowthRate.toStringAsFixed(1)}%',
         icon: Icons.attach_money,
-        color: Colors.green,
+        color:  AppColors.success 
         trend: data.revenueStats.revenueGrowthRate,
       ),
       _StatCard(
@@ -136,7 +137,7 @@ class AdminDashboardScreen extends ConsumerWidget {
         value: data.customerStats.newCustomersToday.toString(),
         subtitle: '총 ${NumberFormat('#,###').format(data.customerStats.totalCustomers)}명',
         icon: Icons.person_add,
-        color: Colors.orange,
+        color:  AppColors.warning 
         trend: data.customerStats.customerGrowthRate,
       ),
       _StatCard(
@@ -273,7 +274,7 @@ class AdminDashboardScreen extends ConsumerWidget {
               '전환율',
               '${aiStats.conversionRate.toStringAsFixed(1)}%',
               Icons.trending_up,
-              Colors.green,
+               AppColors.success 
             ),
             const SizedBox(height: 16),
             _buildMetricRow(
@@ -281,7 +282,7 @@ class AdminDashboardScreen extends ConsumerWidget {
               '평균 주문 금액',
               NumberFormat.currency(locale: 'ko_KR', symbol: '₩').format(aiStats.averageOrderValue),
               Icons.payments,
-              Colors.blue,
+               AppColors.info 
             ),
             const SizedBox(height: 24),
             Text(
@@ -472,19 +473,19 @@ class AdminDashboardScreen extends ConsumerWidget {
     
     switch (status.toLowerCase()) {
       case 'confirmed':
-        color = Colors.green;
+        color =  AppColors.success 
         label = '확정';
         break;
       case 'pending':
-        color = Colors.orange;
+        color =  AppColors.warning 
         label = '대기중';
         break;
       case 'cancelled':
-        color = Colors.red;
+        color =  AppColors.danger 
         label = '취소';
         break;
       default:
-        color = Colors.grey;
+        color =  AppColors.textSecondary 
         label = status;
     }
 
@@ -503,19 +504,19 @@ class AdminDashboardScreen extends ConsumerWidget {
     
     switch (priority.toLowerCase()) {
       case 'high':
-        color = Colors.red;
+        color =  AppColors.danger 
         label = '높음';
         break;
       case 'medium':
-        color = Colors.orange;
+        color =  AppColors.warning 
         label = '보통';
         break;
       case 'low':
-        color = Colors.blue;
+        color =  AppColors.info 
         label = '낮음';
         break;
       default:
-        color = Colors.grey;
+        color =  AppColors.textSecondary 
         label = priority;
     }
 
@@ -568,7 +569,7 @@ class _StatCard extends StatelessWidget {
                 if (trend != 0)
                   Icon(
                     trend > 0 ? Icons.trending_up : Icons.trending_down,
-                    color: trend > 0 ? Colors.green : Colors.red,
+                    color: trend > 0 ?  AppColors.success :  AppColors.danger 
                     size: 24,
                   ),
               ],

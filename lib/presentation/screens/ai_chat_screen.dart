@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/constants/app_colors.dart';
 import '../../services/ai/hyperclova_service.dart';
 
 class AIChatScreen extends StatefulWidget {
@@ -99,7 +100,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                 color: Colors.blue.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.psychology, color: Colors.blue),
+              child: const Icon(Icons.psychology, color: AppColors.info ,
             ),
             const SizedBox(width: 12),
             Column(
@@ -110,7 +111,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                   'Powered by HyperCLOVA X SEED',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey[600],
+                    color: AppColors.textSecondary 600],
                   ),
                 ),
               ],
@@ -170,7 +171,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.textLight 
               boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.05),
@@ -189,7 +190,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                     decoration: InputDecoration(
                       hintText: '여행에 대해 무엇이든 물어보세요...',
                       filled: true,
-                      fillColor: Colors.grey[100],
+                      fillColor: AppColors.textSecondary 100],
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(24),
                         borderSide: BorderSide.none,
@@ -207,7 +208,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                   backgroundColor: const Color(0xFF0066CC),
                   radius: 24,
                   child: IconButton(
-                    icon: const Icon(Icons.send, color: Colors.white),
+                    icon: const Icon(Icons.send, color: AppColors.textLight ,
                     onPressed: () => _sendMessage(_messageController.text),
                   ),
                 ),
@@ -231,7 +232,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
           if (!isUser) ...[
             CircleAvatar(
               backgroundColor: Colors.blue.shade100,
-              child: const Icon(Icons.smart_toy, color: Colors.blue),
+              child: const Icon(Icons.smart_toy, color: AppColors.info ,
             ),
             const SizedBox(width: 8),
           ],
@@ -239,7 +240,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               decoration: BoxDecoration(
-                color: isUser ? const Color(0xFF0066CC) : Colors.grey[100],
+                color: isUser ? const Color(0xFF0066CC) : AppColors.textSecondary 100],
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(16),
                   topRight: const Radius.circular(16),
@@ -253,7 +254,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                   Text(
                     message.content,
                     style: TextStyle(
-                      color: isUser ? Colors.white : Colors.black87,
+                      color: isUser ? AppColors.textLight : AppColors.textPrimary,
                       fontSize: 16,
                     ),
                   ),
@@ -262,7 +263,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
                     _formatTime(message.timestamp),
                     style: TextStyle(
                       fontSize: 12,
-                      color: isUser ? Colors.white70 : Colors.grey[600],
+                      color: isUser ? AppColors.textLight 0 : AppColors.textSecondary 600],
                     ),
                   ),
                 ],
@@ -272,8 +273,8 @@ class _AIChatScreenState extends State<AIChatScreen> {
           if (isUser) ...[
             const SizedBox(width: 8),
             CircleAvatar(
-              backgroundColor: Colors.grey[300],
-              child: const Icon(Icons.person, color: Colors.white),
+              backgroundColor: AppColors.textSecondary 300],
+              child: const Icon(Icons.person, color: AppColors.textLight ,
             ),
           ],
         ],
@@ -289,13 +290,13 @@ class _AIChatScreenState extends State<AIChatScreen> {
         children: [
           CircleAvatar(
             backgroundColor: Colors.blue.shade100,
-            child: const Icon(Icons.smart_toy, color: Colors.blue),
+            child: const Icon(Icons.smart_toy, color: AppColors.info ,
           ),
           const SizedBox(width: 8),
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.grey[100],
+              color: AppColors.textSecondary 100],
               borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
@@ -305,13 +306,13 @@ class _AIChatScreenState extends State<AIChatScreen> {
                   height: 16,
                   child: CircularProgressIndicator(
                     strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[600]!),
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.textSecondary 600]!),
                   ),
                 ),
                 const SizedBox(width: 12),
                 Text(
                   'AI가 답변을 생성하고 있습니다...',
-                  style: TextStyle(color: Colors.grey[600]),
+                  style: TextStyle(color: AppColors.textSecondary 600]),
                 ),
               ],
             ),
@@ -329,9 +330,9 @@ class _AIChatScreenState extends State<AIChatScreen> {
         margin: const EdgeInsets.only(right: 12, bottom: 8),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.textLight 
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: AppColors.textDisabled),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
@@ -343,7 +344,7 @@ class _AIChatScreenState extends State<AIChatScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(action['icon'], color: Colors.blue, size: 28),
+            Icon(action['icon'], color: AppColors.info  size: 28),
             const SizedBox(height: 8),
             Text(
               action['label'],

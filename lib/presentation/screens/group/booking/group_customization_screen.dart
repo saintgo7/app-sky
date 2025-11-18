@@ -73,7 +73,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
       appBar: AppBar(
         title: const Text('여행 상세 설정'),
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.textLight 
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
@@ -125,7 +125,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor.withOpacity(0.1),
         border: Border(
-          bottom: BorderSide(color: Colors.grey.shade300),
+          bottom: BorderSide(color: AppColors.textDisabled),
         ),
       ),
       child: Row(
@@ -143,7 +143,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                 Text(
                   '${_quotation!.participantCount}명 • ${_quotation!.duration}일',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Colors.grey.shade600,
+                        color: AppColors.textSecondary,
                       ),
                 ),
               ],
@@ -162,7 +162,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
               Text(
                 '1인 ${_formatCurrency(_quotation!.pricing.totalPrice / _quotation!.participantCount)}',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.grey.shade600,
+                      color: AppColors.textSecondary,
                     ),
               ),
             ],
@@ -242,7 +242,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                       Text(
                         item.date,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Colors.grey.shade600,
+                              color: AppColors.textSecondary,
                             ),
                       ),
                     ],
@@ -275,9 +275,9 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                         value: 'delete',
                         child: Row(
                           children: [
-                            Icon(Icons.delete, color: Colors.red),
+                            Icon(Icons.delete, color: AppColors.danger ,
                             SizedBox(width: 8),
-                            Text('삭제', style: TextStyle(color: Colors.red)),
+                            Text('삭제', style: TextStyle(color: AppColors.danger ),
                           ],
                         ),
                       ),
@@ -314,7 +314,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                           Text(
                             '${activity.startTime} - ${activity.endTime}',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: Colors.grey.shade600,
+                                  color: AppColors.textSecondary,
                                 ),
                           ),
                           if (activity.description.isNotEmpty)
@@ -337,7 +337,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                         child: Text(
                           '+${_formatCurrency(activity.additionalCost)}',
                           style: const TextStyle(
-                            color: Colors.orange,
+                            color: AppColors.warning 
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -430,7 +430,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
         decoration: BoxDecoration(
           color: isSelected ? Theme.of(context).primaryColor.withOpacity(0.1) : null,
           border: Border.all(
-            color: isSelected ? Theme.of(context).primaryColor : Colors.grey.shade300,
+            color: isSelected ? Theme.of(context).primaryColor : AppColors.textDisabled,
           ),
           borderRadius: BorderRadius.circular(20),
         ),
@@ -447,7 +447,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
             Text(
               '$capacity명',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.grey.shade600,
+                    color: AppColors.textSecondary,
                   ),
             ),
             if (additionalCost != 0)
@@ -455,7 +455,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                 '${additionalCost > 0 ? '+' : ''}${_formatCurrency(additionalCost)}',
                 style: TextStyle(
                   fontSize: 12,
-                  color: additionalCost > 0 ? Colors.red : Colors.green,
+                  color: additionalCost > 0 ? AppColors.danger : AppColors.success 
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -529,14 +529,14 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
         ),
         child: Row(
           children: [
-            Icon(Icons.info, color: Colors.blue),
+            Icon(Icons.info, color: AppColors.info ,
             const SizedBox(width: 8),
             Expanded(
               child: Text(
                 _customizations['assignmentMethod'] == 'auto'
                     ? '체크인 시 자동으로 배정됩니다'
                     : '부서별로 자동 배정됩니다',
-                style: TextStyle(color: Colors.blue),
+                style: TextStyle(color: AppColors.info ,
               ),
             ),
           ],
@@ -615,7 +615,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                 Text(
                   '${participants.length}명',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey.shade600,
+                        color: AppColors.textSecondary,
                       ),
                 ),
                 IconButton(
@@ -632,7 +632,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                 children: participants.map((participant) {
                   return Chip(
                     avatar: CircleAvatar(
-                      backgroundColor: Colors.grey.shade300,
+                      backgroundColor: AppColors.textDisabled,
                       child: Text(participant.name[0]),
                     ),
                     label: Text(participant.name),
@@ -645,17 +645,17 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  color: AppColors.background,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: Colors.grey.shade300,
+                    color: AppColors.textDisabled,
                     style: BorderStyle.solid,
                   ),
                 ),
                 child: Center(
                   child: Text(
                     '참가자를 드래그하여 배정하세요',
-                    style: TextStyle(color: Colors.grey.shade600),
+                    style: TextStyle(color: AppColors.textSecondary),
                   ),
                 ),
               ),
@@ -788,7 +788,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                       border: Border.all(
                         color: isSelected 
                             ? Theme.of(context).primaryColor
-                            : Colors.grey.shade300,
+                            : AppColors.textDisabled,
                       ),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -819,7 +819,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
                           style: TextStyle(
                             color: entry.value['cost'] as int > 0
                                 ? Colors.orange
-                                : Colors.green,
+                                : AppColors.success 
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -1216,7 +1216,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
         Text(
           subtitle,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey.shade600,
+                color: AppColors.textSecondary,
               ),
         ),
       ],
@@ -1227,7 +1227,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -1505,7 +1505,7 @@ class _GroupCustomizationScreenState extends State<GroupCustomizationScreen>
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('설정이 저장되었습니다'),
-          backgroundColor: Colors.green,
+          backgroundColor: AppColors.success 
         ),
       );
     } catch (e) {

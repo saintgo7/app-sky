@@ -94,7 +94,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
       appBar: AppBar(
         title: const Text('단체 견적 요청'),
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.textLight 
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
@@ -196,14 +196,14 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
             const SizedBox(height: 8),
             Row(
               children: [
-                Icon(Icons.person, size: 16, color: Colors.grey),
+                Icon(Icons.person, size: 16, color: AppColors.textSecondary ,
                 const SizedBox(width: 4),
                 Text(
                   _groupInfo!.contactPerson,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(width: 16),
-                Icon(Icons.email, size: 16, color: Colors.grey),
+                Icon(Icons.email, size: 16, color: AppColors.textSecondary ,
                 const SizedBox(width: 4),
                 Text(
                   _groupInfo!.contactEmail,
@@ -436,14 +436,14 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
         color: discountRate > 0 ? Colors.green.withOpacity(0.1) : Colors.grey.withOpacity(0.1),
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: discountRate > 0 ? Colors.green : Colors.grey.shade300,
+          color: discountRate > 0 ? AppColors.success : AppColors.textDisabled,
         ),
       ),
       child: Column(
         children: [
           Icon(
             discountRate > 0 ? Icons.discount : Icons.info,
-            color: discountRate > 0 ? Colors.green : Colors.grey,
+            color: discountRate > 0 ? AppColors.success : AppColors.textSecondary 
           ),
           const SizedBox(height: 4),
           Text(
@@ -455,7 +455,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
           Text(
             discountRate > 0 ? '${discountRate.toInt()}%' : '없음',
             style: TextStyle(
-              color: discountRate > 0 ? Colors.green : Colors.grey,
+              color: discountRate > 0 ? AppColors.success : AppColors.textSecondary 
               fontWeight: FontWeight.bold,
               fontSize: 18,
             ),
@@ -478,12 +478,12 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
         children: [
           Row(
             children: [
-              Icon(Icons.lightbulb, color: Colors.blue, size: 20),
+              Icon(Icons.lightbulb, color: AppColors.info  size: 20),
               const SizedBox(width: 8),
               Text(
                 '인원수별 혜택',
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      color: Colors.blue,
+                      color: AppColors.info 
                       fontWeight: FontWeight.bold,
                     ),
               ),
@@ -502,7 +502,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
               child: Text(
                 entry.value,
                 style: TextStyle(
-                  color: isActive ? Colors.blue : Colors.grey,
+                  color: isActive ? AppColors.info : AppColors.textSecondary 
                   fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
@@ -584,7 +584,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
               border: Border.all(
                 color: isSelected 
                     ? Theme.of(context).primaryColor
-                    : Colors.grey.shade300,
+                    : AppColors.textDisabled,
               ),
             ),
             child: Row(
@@ -603,7 +603,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                       Text(
                         '${_formatCurrency(entry.value['min'] as double)} - ${_formatCurrency(entry.value['max'] as double)}',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
+                              color: isSelected ? Theme.of(context).primaryColor : AppColors.textSecondary 
                             ),
                       ),
                       Text(
@@ -706,7 +706,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor.withOpacity(0.1),
             border: Border(
-              bottom: BorderSide(color: Colors.grey.shade300),
+              bottom: BorderSide(color: AppColors.textDisabled),
             ),
           ),
           child: Row(
@@ -739,7 +739,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.travel_explore, size: 64, color: Colors.grey),
+                      Icon(Icons.travel_explore, size: 64, color: AppColors.textSecondary ,
                       SizedBox(height: 16),
                       Text('사용 가능한 패키지가 없습니다'),
                       SizedBox(height: 8),
@@ -779,7 +779,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
-                      color: Colors.grey.shade300,
+                      color: AppColors.textDisabled,
                       child: const Icon(Icons.image, size: 64),
                     );
                   },
@@ -792,13 +792,13 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: AppColors.danger 
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
                       '${discountRate.toInt()}% 할인',
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: AppColors.textLight 
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
@@ -817,7 +817,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                   child: Text(
                     '${package.duration}일',
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textLight 
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -842,12 +842,12 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    Icon(Icons.location_on, size: 16, color: Colors.grey),
+                    Icon(Icons.location_on, size: 16, color: AppColors.textSecondary ,
                     const SizedBox(width: 4),
                     Text(
                       package.destination,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.grey,
+                            color: AppColors.textSecondary 
                           ),
                     ),
                   ],
@@ -871,7 +871,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                               '개별: ${_formatCurrency(package.pricing.basePrice)}',
                               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                     decoration: TextDecoration.lineThrough,
-                                    color: Colors.grey,
+                                    color: AppColors.textSecondary 
                                   ),
                             ),
                           ],
@@ -885,7 +885,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                           Text(
                             '총액: ${_formatCurrency(groupPrice.totalPrice)}',
                             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Colors.grey.shade600,
+                                  color: AppColors.textSecondary,
                                 ),
                           ),
                         ],
@@ -911,7 +911,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.receipt_long, size: 64, color: Colors.grey),
+            const Icon(Icons.receipt_long, size: 64, color: AppColors.textSecondary ,
             const SizedBox(height: 16),
             const Text('생성된 견적서가 없습니다'),
             const SizedBox(height: 8),
@@ -964,7 +964,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
                   child: Text(
                     quotation.status,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: AppColors.textLight 
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -1036,7 +1036,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
   Widget _buildSummaryItem(String label, String value, IconData icon) {
     return Column(
       children: [
-        Icon(icon, color: Colors.grey.shade600, size: 20),
+        Icon(icon, color: AppColors.textSecondary, size: 20),
         const SizedBox(height: 4),
         Text(
           value,
@@ -1045,7 +1045,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Colors.grey.shade600,
+                color: AppColors.textSecondary,
               ),
         ),
       ],
@@ -1056,7 +1056,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(color: AppColors.textDisabled),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
@@ -1093,7 +1093,7 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
             style: TextStyle(
               fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
               fontSize: isTotal ? 16 : 14,
-              color: isDiscount ? Colors.red : (isTotal ? Theme.of(context).primaryColor : null),
+              color: isDiscount ? AppColors.danger : (isTotal ? Theme.of(context).primaryColor : null),
             ),
           ),
         ],
@@ -1160,15 +1160,15 @@ class _GroupQuotationScreenState extends State<GroupQuotationScreen>
   Color _getQuotationStatusColor(String status) {
     switch (status) {
       case '생성됨':
-        return Colors.blue;
+        return AppColors.info 
       case '검토중':
-        return Colors.orange;
+        return AppColors.warning 
       case '승인됨':
-        return Colors.green;
+        return AppColors.success 
       case '거절됨':
-        return Colors.red;
+        return AppColors.danger 
       default:
-        return Colors.grey;
+        return AppColors.textSecondary 
     }
   }
 

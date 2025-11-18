@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 
@@ -147,7 +148,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
             Text(
               '당신의 여행 패턴',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.white,
+                    color:  AppColors.textLight 
                     fontWeight: FontWeight.bold,
                   ),
             ),
@@ -156,14 +157,14 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
               Text(
                 '${_bookingHistory.length}번의 여행 분석 결과',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.white70,
+                      color:  AppColors.textLight 0,
                     ),
               ),
               const SizedBox(height: 4),
               Text(
                 '신뢰도: ${(_userPreferences!.confidenceScore * 100).toInt()}%',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.white70,
+                      color:  AppColors.textLight 0,
                     ),
               ),
             ],
@@ -199,7 +200,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
             '총 여행 횟수',
             '${_bookingHistory.length}',
             Icons.flight_takeoff,
-            Colors.blue,
+             AppColors.info 
           ),
         ),
         const SizedBox(width: 12),
@@ -208,7 +209,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
             '평균 여행 비용',
             '₩${_getAverageSpending().toStringAsFixed(0)}',
             Icons.attach_money,
-            Colors.green,
+             AppColors.success 
           ),
         ),
         const SizedBox(width: 12),
@@ -217,7 +218,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
             '선호 시즌',
             _getPreferredSeason(),
             Icons.wb_sunny,
-            Colors.orange,
+             AppColors.warning 
           ),
         ),
       ],
@@ -439,7 +440,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
                     const SizedBox(height: 4),
                     LinearProgressIndicator(
                       value: entry.value,
-                      backgroundColor: Colors.grey.shade300,
+                      backgroundColor: AppColors.textDisabled,
                     ),
                   ],
                 ),
@@ -481,7 +482,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
             '평균 일 예산',
             '₩${(_budgetProfile!.averageSpendingPerDay / 1000).toInt()}K',
             Icons.today,
-            Colors.blue,
+             AppColors.info 
           ),
         ),
         const SizedBox(width: 12),
@@ -490,7 +491,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
             '평균 총 예산',
             '₩${(_budgetProfile!.averageTotalSpending / 1000).toInt()}K',
             Icons.account_balance_wallet,
-            Colors.green,
+             AppColors.success 
           ),
         ),
         const SizedBox(width: 12),
@@ -499,7 +500,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
             '예산 유연성',
             '${(_budgetProfile!.flexibility * 100).toInt()}%',
             Icons.trending_up,
-            Colors.orange,
+             AppColors.warning 
           ),
         ),
       ],
@@ -559,7 +560,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
                       titleStyle: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color:  AppColors.textLight 
                       ),
                     );
                   }).toList(),
@@ -576,7 +577,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
                   backgroundColor: _getCategoryColor(entry.key),
                   label: Text(
                     entry.key,
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                    style: const TextStyle(color:  AppColors.textLight  fontSize: 12),
                   ),
                 );
               }).toList(),
@@ -663,7 +664,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
                   children: [
                     Icon(
                       Icons.savings,
-                      color: Colors.green,
+                      color:  AppColors.success 
                       size: 20,
                     ),
                     const SizedBox(width: 8),
@@ -731,7 +732,7 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
                       const SizedBox(height: 4),
                       LinearProgressIndicator(
                         value: score,
-                        backgroundColor: Colors.grey.shade300,
+                        backgroundColor: AppColors.textDisabled,
                         color: _getStyleColor(style),
                       ),
                     ],
@@ -1008,42 +1009,42 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
 
   List<BarChartGroupData> _generateSeasonalData() {
     return [
-      BarChartGroupData(x: 0, barRods: [BarChartRodData(toY: 8, color: Colors.green)]),
-      BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 3, color: Colors.red)]),
-      BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 6, color: Colors.orange)]),
-      BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 4, color: Colors.blue)]),
+      BarChartGroupData(x: 0, barRods: [BarChartRodData(toY: 8, color:  AppColors.success ]),
+      BarChartGroupData(x: 1, barRods: [BarChartRodData(toY: 3, color:  AppColors.danger ]),
+      BarChartGroupData(x: 2, barRods: [BarChartRodData(toY: 6, color:  AppColors.warning ]),
+      BarChartGroupData(x: 3, barRods: [BarChartRodData(toY: 4, color:  AppColors.info ]),
     ];
   }
 
   Color _getCategoryColor(String category) {
     switch (category) {
       case '숙박':
-        return Colors.blue;
+        return  AppColors.info 
       case '교통':
-        return Colors.green;
+        return  AppColors.success 
       case '식사':
-        return Colors.orange;
+        return  AppColors.warning 
       case '활동':
         return Colors.purple;
       case '기타':
-        return Colors.grey;
+        return  AppColors.textSecondary 
       default:
-        return Colors.grey;
+        return  AppColors.textSecondary 
     }
   }
 
   Color _getDestinationColor(String destination) {
     switch (destination) {
       case '일본':
-        return Colors.red;
+        return  AppColors.danger 
       case '태국':
-        return Colors.blue;
+        return  AppColors.info 
       case '베트남':
-        return Colors.green;
+        return  AppColors.success 
       case '싱가포르':
-        return Colors.orange;
+        return  AppColors.warning 
       default:
-        return Colors.grey;
+        return  AppColors.textSecondary 
     }
   }
 
@@ -1052,15 +1053,15 @@ class _TravelInsightScreenState extends State<TravelInsightScreen>
       case TravelStyle.luxury:
         return Colors.purple;
       case TravelStyle.cultural:
-        return Colors.blue;
+        return  AppColors.info 
       case TravelStyle.adventure:
-        return Colors.green;
+        return  AppColors.success 
       case TravelStyle.family:
-        return Colors.orange;
+        return  AppColors.warning 
       case TravelStyle.budget:
-        return Colors.red;
+        return  AppColors.danger 
       default:
-        return Colors.grey;
+        return  AppColors.textSecondary 
     }
   }
 

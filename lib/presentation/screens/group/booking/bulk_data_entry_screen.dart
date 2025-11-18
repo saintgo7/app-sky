@@ -90,7 +90,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
       appBar: AppBar(
         title: const Text('참가자 일괄 관리'),
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.textLight 
         actions: [
           IconButton(
             icon: const Icon(Icons.download),
@@ -198,7 +198,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Colors.grey.shade300,
+                  color: AppColors.textDisabled,
                   style: BorderStyle.solid,
                 ),
                 borderRadius: BorderRadius.circular(8),
@@ -209,7 +209,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
                   Icon(
                     Icons.cloud_upload,
                     size: 64,
-                    color: Colors.grey.shade400,
+                    color: AppColors.textDisabled,
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -220,7 +220,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
                   Text(
                     '.xlsx, .xls 파일 지원 (최대 10MB)',
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey.shade600,
+                          color: AppColors.textSecondary,
                         ),
                   ),
                   const SizedBox(height: 24),
@@ -322,7 +322,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
             Text(
               'Excel의 컬럼을 시스템 필드에 매핑해주세요',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey.shade600,
+                    color: AppColors.textSecondary,
                   ),
             ),
             const SizedBox(height: 16),
@@ -366,7 +366,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
               '${_getFieldLabel(field)}${isRequired ? ' *' : ''}',
               style: TextStyle(
                 fontWeight: isRequired ? FontWeight.bold : FontWeight.normal,
-                color: isRequired ? Colors.black : Colors.grey.shade700,
+                color: isRequired ? Colors.black : AppColors.textSecondary,
               ),
             ),
           ),
@@ -434,7 +434,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
             Container(
               height: 300,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey.shade300),
+                border: Border.all(color: AppColors.textDisabled),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: ListView.builder(
@@ -444,9 +444,9 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
                     return Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
+                        color: AppColors.background,
                         border: Border(
-                          bottom: BorderSide(color: Colors.grey.shade300),
+                          bottom: BorderSide(color: AppColors.textDisabled),
                         ),
                       ),
                       child: Row(
@@ -468,7 +468,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       border: Border(
-                        bottom: BorderSide(color: Colors.grey.shade200),
+                        bottom: BorderSide(color: AppColors.textDisabled),
                       ),
                     ),
                     child: Row(
@@ -519,7 +519,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -548,7 +548,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
                 borderRadius: BorderRadius.circular(8),
               ),
               filled: true,
-              fillColor: Colors.grey.shade100,
+              fillColor: AppColors.background,
             ),
             onChanged: (value) {
               setState(() => _searchQuery = value);
@@ -584,7 +584,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.people_outline, size: 64, color: Colors.grey),
+          const Icon(Icons.people_outline, size: 64, color: AppColors.textSecondary ,
           const SizedBox(height: 16),
           Text(
             _searchQuery.isNotEmpty
@@ -598,7 +598,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
                 ? '검색어를 변경해보세요'
                 : 'Excel 파일을 업로드하거나 직접 추가해주세요',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey,
+                  color: AppColors.textSecondary 
                 ),
           ),
           const SizedBox(height: 16),
@@ -619,11 +619,11 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
       margin: const EdgeInsets.only(bottom: 8),
       child: ExpansionTile(
         leading: CircleAvatar(
-          backgroundColor: hasErrors ? Colors.red : Colors.green,
+          backgroundColor: hasErrors ? AppColors.danger : AppColors.success 
           child: Text(
             '${index + 1}',
             style: const TextStyle(
-              color: Colors.white,
+              color: AppColors.textLight 
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -710,9 +710,9 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
               value: 'delete',
               child: Row(
                 children: [
-                  Icon(Icons.delete, color: Colors.red),
+                  Icon(Icons.delete, color: AppColors.danger ,
                   SizedBox(width: 8),
-                  Text('삭제', style: TextStyle(color: Colors.red)),
+                  Text('삭제', style: TextStyle(color: AppColors.danger ),
                 ],
               ),
             ),
@@ -801,7 +801,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -835,7 +835,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.assignment_outlined, size: 64, color: Colors.grey),
+          const Icon(Icons.assignment_outlined, size: 64, color: AppColors.textSecondary ,
           const SizedBox(height: 16),
           Text(
             '여권/비자 정보가 없습니다',
@@ -845,7 +845,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
           Text(
             '참가자 데이터에 여권 정보를 추가해주세요',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey,
+                  color: AppColors.textSecondary 
                 ),
           ),
         ],
@@ -860,10 +860,10 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: isExpiringSoon ? Colors.orange : Colors.green,
+          backgroundColor: isExpiringSoon ? AppColors.warning : AppColors.success 
           child: Icon(
             isExpiringSoon ? Icons.warning : Icons.assignment,
-            color: Colors.white,
+            color: AppColors.textLight 
           ),
         ),
         title: Text(
@@ -895,7 +895,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -1184,7 +1184,7 @@ class _BulkDataEntryScreenState extends State<BulkDataEntryScreen>
         content: Text(totalErrors == 0 
             ? '모든 데이터가 유효합니다'
             : '$totalErrors개의 오류가 발견되었습니다'),
-        backgroundColor: totalErrors == 0 ? Colors.green : Colors.orange,
+        backgroundColor: totalErrors == 0 ? AppColors.success : AppColors.warning 
       ),
     );
   }

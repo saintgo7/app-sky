@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/constants/app_colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import '../../providers/admin_auth_provider.dart';
@@ -328,7 +329,7 @@ class _CustomerManagementScreenState extends ConsumerState<CustomerManagementScr
                           icon: const Icon(Icons.check_circle_outline),
                           label: const Text('블랙리스트 해제'),
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: Colors.green,
+                            foregroundColor:  AppColors.success 
                           ),
                         ),
                     ],
@@ -722,7 +723,7 @@ class CustomerDetailDialog extends ConsumerWidget {
               label,
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
-                color: Colors.grey,
+                color:  AppColors.textSecondary 
               ),
             ),
           ),
@@ -827,15 +828,15 @@ class BookingHistoryDialog extends ConsumerWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'confirmed':
-        return Colors.green;
+        return  AppColors.success 
       case 'pending':
-        return Colors.orange;
+        return  AppColors.warning 
       case 'cancelled':
-        return Colors.red;
+        return  AppColors.danger 
       case 'completed':
-        return Colors.blue;
+        return  AppColors.info 
       default:
-        return Colors.grey;
+        return  AppColors.textSecondary 
     }
   }
 

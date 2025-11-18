@@ -84,7 +84,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
       appBar: AppBar(
         title: const Text('커뮤니케이션'),
         backgroundColor: Theme.of(context).primaryColor,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.textLight 
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -195,7 +195,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -225,7 +225,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                   borderRadius: BorderRadius.circular(8),
                 ),
                 filled: true,
-                fillColor: Colors.grey.shade100,
+                fillColor: AppColors.background,
                 isDense: true,
               ),
               onChanged: (value) {
@@ -324,9 +324,9 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                       value: 'delete',
                       child: Row(
                         children: [
-                          Icon(Icons.delete, color: Colors.red),
+                          Icon(Icons.delete, color: AppColors.danger ,
                           SizedBox(width: 8),
-                          Text('삭제', style: TextStyle(color: Colors.red)),
+                          Text('삭제', style: TextStyle(color: AppColors.danger ),
                         ],
                       ),
                     ),
@@ -345,14 +345,14 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
             const SizedBox(height: 12),
             Row(
               children: [
-                Icon(Icons.person, size: 16, color: Colors.grey.shade600),
+                Icon(Icons.person, size: 16, color: AppColors.textSecondary),
                 const SizedBox(width: 4),
                 Text(
                   _getMemberName(announcement.senderId),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(width: 16),
-                Icon(Icons.access_time, size: 16, color: Colors.grey.shade600),
+                Icon(Icons.access_time, size: 16, color: AppColors.textSecondary),
                 const SizedBox(width: 4),
                 Text(
                   _formatDateTime(announcement.createdAt),
@@ -444,14 +444,14 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor.withOpacity(0.1),
         border: Border(
-          bottom: BorderSide(color: Colors.grey.shade300),
+          bottom: BorderSide(color: AppColors.textDisabled),
         ),
       ),
       child: Row(
         children: [
           CircleAvatar(
             backgroundColor: Theme.of(context).primaryColor,
-            child: const Icon(Icons.group, color: Colors.white),
+            child: const Icon(Icons.group, color: AppColors.textLight ,
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -498,7 +498,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
               child: Text(
                 member.name[0],
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textLight 
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -522,13 +522,13 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: isMe ? Theme.of(context).primaryColor : Colors.grey.shade200,
+                    color: isMe ? Theme.of(context).primaryColor : AppColors.textDisabled,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     _generateMockMessage(index),
                     style: TextStyle(
-                      color: isMe ? Colors.white : Colors.black,
+                      color: isMe ? AppColors.textLight : Colors.black,
                     ),
                   ),
                 ),
@@ -537,7 +537,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                   '${DateTime.now().hour}:${DateTime.now().minute.toString().padLeft(2, '0')}',
                   style: const TextStyle(
                     fontSize: 11,
-                    color: Colors.grey,
+                    color: AppColors.textSecondary 
                   ),
                 ),
               ],
@@ -547,11 +547,11 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
             const SizedBox(width: 8),
             CircleAvatar(
               radius: 16,
-              backgroundColor: Colors.blue,
+              backgroundColor: AppColors.info 
               child: const Text(
                 '나',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: AppColors.textLight 
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -567,7 +567,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -591,7 +591,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
                   borderRadius: BorderRadius.circular(24),
                 ),
                 filled: true,
-                fillColor: Colors.grey.shade100,
+                fillColor: AppColors.background,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 8,
@@ -608,7 +608,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
               shape: BoxShape.circle,
             ),
             child: IconButton(
-              icon: const Icon(Icons.send, color: Colors.white),
+              icon: const Icon(Icons.send, color: AppColors.textLight ,
               onPressed: _sendMessage,
             ),
           ),
@@ -646,7 +646,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.textLight 
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
@@ -730,14 +730,14 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
             const SizedBox(height: 12),
             Row(
               children: [
-                Icon(Icons.people, size: 16, color: Colors.grey.shade600),
+                Icon(Icons.people, size: 16, color: AppColors.textSecondary),
                 const SizedBox(width: 4),
                 Text('응답률: $responseRate% (${item.responses.length}/${_members.length}명)'),
                 const Spacer(),
                 Text(
                   _formatDateTime(item.createdAt),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey,
+                        color: AppColors.textSecondary 
                       ),
                 ),
               ],
@@ -745,9 +745,9 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
             const SizedBox(height: 12),
             LinearProgressIndicator(
               value: responseRate / 100,
-              backgroundColor: Colors.grey.shade300,
+              backgroundColor: AppColors.textDisabled,
               valueColor: AlwaysStoppedAnimation<Color>(
-                item.type == 'survey' ? Colors.blue : Colors.green,
+                item.type == 'survey' ? AppColors.info : AppColors.success 
               ),
             ),
             const SizedBox(height: 12),
@@ -807,7 +807,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: typeColor,
-          child: Icon(typeIcon, color: Colors.white, size: 20),
+          child: Icon(typeIcon, color: AppColors.textLight  size: 20),
         ),
         title: Text(
           communication.title,
@@ -859,9 +859,9 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
               value: 'delete',
               child: Row(
                 children: [
-                  Icon(Icons.delete, color: Colors.red),
+                  Icon(Icons.delete, color: AppColors.danger ,
                   SizedBox(width: 8),
-                  Text('삭제', style: TextStyle(color: Colors.red)),
+                  Text('삭제', style: TextStyle(color: AppColors.danger ),
                 ],
               ),
             ),
@@ -877,7 +877,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 64, color: Colors.grey),
+          Icon(icon, size: 64, color: AppColors.textSecondary ,
           const SizedBox(height: 16),
           Text(
             '$type이 없습니다',
@@ -887,7 +887,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
           Text(
             '새로운 ${type.toLowerCase()}을 만들어보세요',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.grey,
+                  color: AppColors.textSecondary 
                 ),
           ),
           const SizedBox(height: 16),
@@ -978,15 +978,15 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
   Color _getCommunicationColor(String type) {
     switch (type) {
       case 'announcement':
-        return Colors.blue;
+        return AppColors.info 
       case 'chat':
-        return Colors.green;
+        return AppColors.success 
       case 'survey':
         return Colors.purple;
       case 'vote':
-        return Colors.orange;
+        return AppColors.warning 
       default:
-        return Colors.grey;
+        return AppColors.textSecondary 
     }
   }
 
@@ -1008,15 +1008,15 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
   Color _getRoleColor(GroupRole role) {
     switch (role) {
       case GroupRole.admin:
-        return Colors.red;
+        return AppColors.danger 
       case GroupRole.manager:
-        return Colors.orange;
+        return AppColors.warning 
       case GroupRole.coordinator:
-        return Colors.blue;
+        return AppColors.info 
       case GroupRole.member:
-        return Colors.green;
+        return AppColors.success 
       case GroupRole.viewer:
-        return Colors.grey;
+        return AppColors.textSecondary 
     }
   }
 
@@ -1152,7 +1152,7 @@ class _GroupCommunicationScreenState extends State<GroupCommunicationScreen>
       borderRadius: BorderRadius.circular(8),
       child: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: AppColors.textDisabled),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
