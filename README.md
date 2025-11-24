@@ -55,8 +55,53 @@ lib/
 프로젝트는 다음 세 가지 환경을 지원합니다:
 
 - **개발환경**: `.env.dev`
-- **스테이징**: `.env.staging`  
+- **스테이징**: `.env.staging`
 - **프로덕션**: `.env.prod`
+
+### 환경 변수 설정
+
+프로젝트 루트에 `.env` 파일을 생성하고 다음 변수를 설정하세요:
+
+```env
+# API Configuration
+API_BASE_URL=https://api.travelmate.com/v1
+API_KEY=your_api_key_here
+
+# Authentication
+AUTH_BASE_URL=https://auth.travelmate.com
+
+# External Services - Maps
+NAVER_MAP_CLIENT_ID=your_naver_client_id
+NAVER_MAP_CLIENT_SECRET=your_naver_client_secret
+GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+
+# Payment - Iamport
+IAMPORT_CODE=imp12345678
+IAMPORT_API_KEY=your_iamport_api_key
+IAMPORT_API_SECRET=your_iamport_api_secret
+
+# Firebase
+FIREBASE_API_KEY=your_firebase_api_key
+FIREBASE_PROJECT_ID=your_project_id
+FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+FIREBASE_APP_ID=your_app_id
+
+# AI Service
+AI_SERVICE_URL=https://ai.travelmate.com
+AI_API_KEY=your_ai_api_key
+
+# Environment
+ENVIRONMENT=development
+
+# Database
+DATABASE_NAME=travelmate.db
+
+# Cache Duration (hours)
+CACHE_DURATION_HOURS=24
+
+# API Timeout (seconds)
+API_TIMEOUT_SECONDS=30
+```
 
 ## 시작하기
 
