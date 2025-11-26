@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:math' as math;
 import 'presentation/screens/ai_chat_screen.dart';
+import 'core/constants/app_strings.dart';
 
 void main() {
   runApp(const SkyAirApp());
@@ -13,7 +12,7 @@ class SkyAirApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '스카이 항공',
+      title: AppStrings.appName,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: 'Roboto',
