@@ -25,39 +25,46 @@ flutter analyze                   # Run static analysis
 flutter format .                  # Format code
 ```
 
+### Testing
+```bash
+flutter test                      # Run all tests
+```
+
 ## Architecture
 
 ```
 lib/
-├── core/              # 앱 핵심 기능 (상수, 테마, 유틸리티)
-│   ├── constants/     # 앱 상수 (문자열, 색상)
-│   ├── themes/        # UI 테마
-│   ├── error/         # 에러 처리
-│   ├── network/       # 네트워크 유틸리티
-│   └── environment/   # 환경 설정
-├── services/          # 외부 서비스
-│   └── ai/            # AI 서비스 (HyperCLOVA)
-├── presentation/      # UI 계층
-│   └── screens/       # 화면 위젯
-└── main.dart          # 앱 진입점
+├── main.dart                     # 앱 진입점 (SkyAirApp)
+├── core/
+│   ├── constants/
+│   │   ├── app_colors.dart       # 색상 상수
+│   │   └── app_strings.dart      # 문자열 상수
+│   └── themes/
+│       └── app_theme.dart        # UI 테마
+├── services/
+│   └── ai/
+│       └── hyperclova_service.dart  # HyperCLOVA X AI 서비스
+└── presentation/
+    └── screens/
+        └── ai_chat_screen.dart   # AI 채팅 화면
 ```
 
 ## Key Technologies
 
 - **Framework**: Flutter 3.8+
 - **AI**: HyperCLOVA X SEED (Naver AI)
-- **State Management**: Provider
+- **HTTP Client**: Dio
 
-## Environment Configuration
+## Internationalization
 
-The app supports three environments with separate configuration files:
-- `.env.dev` - Development
-- `.env.staging` - Staging
-- `.env.prod` - Production
+4개 언어 지원 (l10n/ 폴더):
+- 한국어 (ko)
+- 영어 (en)
+- 중국어 (zh)
+- 일본어 (ja)
 
 ## Important Notes
 
 - Main entry point is `lib/main.dart` which runs `SkyAirApp`
 - AI chat functionality uses `HyperClovaService` for travel consultation
 - The app targets desktop-first design with responsive layouts
-- Supports 4 languages: Korean, English, Chinese, Japanese
