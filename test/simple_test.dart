@@ -10,10 +10,10 @@ void main() {
     });
 
     test('String operations', () {
-      const String greeting = 'Hello, TravelMate!';
-      expect(greeting.length, equals(18));
-      expect(greeting.toLowerCase(), equals('hello, travelmate!'));
-      expect(greeting.contains('Travel'), isTrue);
+      const String greeting = 'Hello, SkyAir!';
+      expect(greeting.length, equals(14));
+      expect(greeting.toLowerCase(), equals('hello, skyair!'));
+      expect(greeting.contains('Sky'), isTrue);
     });
 
     test('List operations', () {
