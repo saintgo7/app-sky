@@ -1,6 +1,6 @@
 class AppStrings {
-  static const String appName = 'TravelMate';
-  static const String welcome = 'Welcome to TravelMate';
+  static const String appName = '스카이 항공';
+  static const String welcome = '스카이 항공에 오신 것을 환영합니다';
   static const String getStarted = 'Get Started';
   static const String login = 'Login';
   static const String signup = 'Sign Up';
