@@ -1,5 +1,5 @@
-name: travelmate
-description: Flutter travel agency platform with AI-powered features and comprehensive booking system.
+name: skyair
+description: 스카이 항공 - AI 기반 항공권 예약 및 여행 서비스 플랫폼
 
 publish_to: 'none'
 
@@ -14,69 +14,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  # State Management
-  provider: ^6.1.2
-  flutter_riverpod: ^2.6.1
-
-  # HTTP & API
+  # HTTP Client (AI 서비스용)
   dio: ^5.4.2+1
-  retrofit: ^4.4.1
-  json_annotation: ^4.9.0
 
-  # UI & Utilities
-  cached_network_image: ^3.3.1
-
-  # Data Storage
-  shared_preferences: ^2.2.3
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
-  sqflite: ^2.4.2
-
-  # Environment & Configuration
+  # Internationalization
   intl: ^0.20.2
-  flutter_dotenv: ^5.2.1
-
-  # Network
-  connectivity_plus: ^6.1.1
-
-  # Notifications
-  flutter_local_notifications: ^18.0.1
-
-  # Location
-  location: ^6.0.2
-
-  # Payment
-  webview_flutter: ^4.10.0
-
-  # Social Login
-  google_sign_in: ^6.2.2
-  firebase_auth: ^5.3.3
-  firebase_core: ^3.8.1
-
-  # Real-time
-  socket_io_client: ^2.0.3+1
-
-  # AI/ML
-  google_mlkit_text_recognition: ^0.15.0
-
-  # Routing
-  go_router: ^14.6.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # Testing
-  mockito: ^5.4.4
-  mocktail: ^1.0.3
-  test: ^1.25.2
-  fake_async: ^1.3.1
-
-  # Code Generation
-  build_runner: ^2.4.9
-  json_serializable: ^6.7.1
-  retrofit_generator: ^8.2.1
-  hive_generator: ^2.0.1
 
   # Linting
   flutter_lints: ^4.0.0
@@ -89,14 +35,3 @@ flutter:
     - assets/images/
     - assets/fonts/
     - l10n/
-    - .env
-    - .env.dev
-    - .env.staging
-    - .env.prod
-
-  # fonts:
-  #   - family: NotoSans
-  #     fonts:
-  #       - asset: assets/fonts/NotoSans-Regular.ttf
-  #       - asset: assets/fonts/NotoSans-Bold.ttf
-  #         weight: 700

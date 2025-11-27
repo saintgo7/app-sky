@@ -4,33 +4,19 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-TravelMate is a Flutter-based travel agency platform with AI-powered features and comprehensive booking system. The project follows Clean Architecture principles with clear separation of concerns.
+스카이 항공(Sky Air)은 Flutter 기반 AI 항공권 예약 및 여행 서비스 플랫폼입니다. HyperCLOVA X SEED를 활용한 AI 여행 상담 기능을 제공합니다.
 
 ## Development Commands
 
 ### Setup
 ```bash
 flutter pub get                    # Install dependencies
-flutter packages pub run build_runner build  # Generate code
 ```
 
 ### Running the App
 ```bash
 flutter run                       # Run in development mode
 flutter run --release             # Run in release mode
-flutter run --flavor dev          # Run with dev environment
-flutter run --flavor staging      # Run with staging environment
-flutter run --flavor prod         # Run with production environment
-```
-
-### Code Generation
-```bash
-flutter packages pub run build_runner build --delete-conflicting-outputs
-```
-
-### Internationalization
-```bash
-flutter gen-l10n                  # Generate localization files
 ```
 
 ### Code Quality
@@ -39,65 +25,46 @@ flutter analyze                   # Run static analysis
 flutter format .                  # Format code
 ```
 
+### Testing
+```bash
+flutter test                      # Run all tests
+```
+
 ## Architecture
 
-The project follows Clean Architecture with these layers:
-
-### Core Layer (`lib/core/`)
-- **constants/**: App-wide constants (API endpoints, colors, strings)
-- **themes/**: UI themes and styling
-- **utils/**: Utility functions and helpers
-- **environment/**: Environment configuration management
-
-### Data Layer (`lib/data/`)
-- **api/**: REST API clients using Retrofit and Dio
-- **models/**: Data models for JSON serialization
-- **repositories/**: Repository implementations (API + local storage)
-
-### Domain Layer (`lib/domain/`)
-- **entities/**: Pure business objects
-- **usecases/**: Business logic operations
-
-### Presentation Layer (`lib/presentation/`)
-- **screens/**: Full-screen widgets organized by feature
-- **widgets/**: Reusable UI components
-- **providers/**: State management using Riverpod
-
-### Services Layer (`lib/services/`)
-- **ai/**: AI services (Dialogflow, ML Kit)
-- **notifications/**: Push and local notifications
-- **payments/**: Payment integration (Iamport, Bootpay)
+```
+lib/
+├── main.dart                     # 앱 진입점 (SkyAirApp)
+├── core/
+│   ├── constants/
+│   │   ├── app_colors.dart       # 색상 상수
+│   │   └── app_strings.dart      # 문자열 상수
+│   └── themes/
+│       └── app_theme.dart        # UI 테마
+├── services/
+│   └── ai/
+│       └── hyperclova_service.dart  # HyperCLOVA X AI 서비스
+└── presentation/
+    └── screens/
+        └── ai_chat_screen.dart   # AI 채팅 화면
+```
 
 ## Key Technologies
 
-- **State Management**: Riverpod + Provider
-- **HTTP Client**: Dio + Retrofit
-- **Authentication**: Firebase Auth + Google Sign In
-- **Payments**: Iamport + Bootpay
-- **AI/ML**: Dialogflow + Google ML Kit
-- **Database**: SQLite + Shared Preferences + Hive
-- **Internationalization**: 4 languages (Korean, English, Chinese, Japanese)
+- **Framework**: Flutter 3.8+
+- **AI**: HyperCLOVA X SEED (Naver AI)
+- **HTTP Client**: Dio
 
-## Environment Configuration
+## Internationalization
 
-The app supports three environments with separate configuration files:
-- `.env.dev` - Development
-- `.env.staging` - Staging  
-- `.env.prod` - Production
-
-Use `AppEnvironment.initialize(Environment.development)` to set the environment.
-
-## Code Generation
-
-Run code generation after modifying:
-- API services (Retrofit)
-- Data models (JSON serializable)
-- Database models (Hive)
+4개 언어 지원 (l10n/ 폴더):
+- 한국어 (ko)
+- 영어 (en)
+- 중국어 (zh)
+- 일본어 (ja)
 
 ## Important Notes
 
-- **Testing**: Test infrastructure is set up but no tests are currently implemented
-- **Linting**: Uses default Flutter linting rules via `flutter_lints` package
-- **Real-time Features**: Socket.io is integrated for real-time communication
-- **Assets**: Located in `assets/` with subdirectories for fonts, icons, and images
-- **Localization**: ARB files are in `l10n/` directory for 4 supported languages
+- Main entry point is `lib/main.dart` which runs `SkyAirApp`
+- AI chat functionality uses `HyperClovaService` for travel consultation
+- The app targets desktop-first design with responsive layouts

@@ -1,30 +1,19 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+// 스카이 항공 기본 위젯 테스트
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:travelmate/main.dart';
+import 'package:skyair/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('SkyAir app smoke test', (WidgetTester tester) async {
+    // 앱 빌드
+    await tester.pumpWidget(const SkyAirApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // 스카이 항공 타이틀 확인
+    expect(find.text('스카이 항공'), findsWidgets);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // 메인 슬로건 확인
+    expect(find.text('어디로 떠나시나요?'), findsOneWidget);
   });
 }
