@@ -1,481 +1,752 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스카이 항공 - HyperCLOVA X SEED</title>
+    <title>스카이 항공 - AI 스마트 여행 비서</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <style>
+        :root {
+            --primary: #0064DE;
+            --primary-dark: #0048A0;
+            --secondary: #FF6B00;
+            --text-dark: #111111;
+            --text-gray: #666666;
+            --bg-light: #F5F7FA;
+            --white: #FFFFFF;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
-            color: #333;
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
         }
-        
+
+        /* Header */
         .header {
-            background: linear-gradient(135deg, #0066CC, #0052A3);
-            color: white;
-            padding: 20px 0;
-            position: relative;
-            overflow: hidden;
+            background: var(--white);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            top: -50px;
-            right: -50px;
-        }
-        
-        .nav {
+
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
+            padding: 16px 24px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 20px;
-            position: relative;
-            z-index: 2;
         }
-        
+
         .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
             display: flex;
             align-items: center;
-            font-size: 24px;
-            font-weight: bold;
+            text-decoration: none;
+            gap: 8px;
         }
-        
-        .logo::before {
-            content: '✈️';
-            margin-right: 10px;
-            font-size: 28px;
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
         }
-        
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
         }
-        
-        .ai-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 16px;
+
+        .btn-login {
+            padding: 8px 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            color: var(--text-dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-login:hover {
+            background: #f8f9fa;
+            border-color: #ccc;
+        }
+
+        .currency-selector {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-right: 8px;
+            cursor: pointer;
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .currency-selector:hover {
+            background-color: #f0f0f0;
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 20px 120px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 20px;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        /* Search Box */
+        .search-container {
+            max-width: 1100px;
+            margin: -80px auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-box {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            padding: 24px 32px;
+        }
+
+        .search-tabs {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 16px;
+        }
+
+        .search-tab {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-gray);
+            cursor: pointer;
             display: flex;
             align-items: center;
             gap: 8px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
         }
-        
-        .ai-badge::before {
-            content: '🧠';
+
+        .search-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
         }
-        
-        .hero {
-            text-align: center;
-            padding: 80px 20px;
-            position: relative;
-            z-index: 2;
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 16px;
+            align-items: end;
         }
-        
-        .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-        
-        .hero p {
-            font-size: 20px;
-            opacity: 0.9;
-        }
-        
-        .search-section {
-            max-width: 800px;
-            margin: -60px auto 0;
-            position: relative;
-            z-index: 3;
-            padding: 0 20px;
-        }
-        
-        .search-card {
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            padding: 32px;
-        }
-        
-        .tabs {
-            display: flex;
-            margin-bottom: 24px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .tab {
-            flex: 1;
-            padding: 16px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            transition: all 0.3s;
-        }
-        
-        .tab.active {
-            color: #0066CC;
-            font-weight: bold;
-        }
-        
-        .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: #0066CC;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 16px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 20px;
-            transition: border-color 0.3s;
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: #0066CC;
-        }
-        
-        .search-btn {
-            width: 100%;
-            padding: 16px;
-            background: #FF6B00;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .search-btn:hover {
-            background: #e55a00;
-        }
-        
-        .ai-section {
-            max-width: 1200px;
-            margin: 80px auto;
-            padding: 0 20px;
-        }
-        
-        .ai-banner {
-            background: linear-gradient(135deg, #8B5A96, #6B4C7A);
-            border-radius: 20px;
-            padding: 40px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            box-shadow: 0 20px 40px rgba(139,90,150,0.3);
-        }
-        
-        .ai-content {
-            flex: 1;
-        }
-        
-        .ai-badge-new {
-            background: rgba(255,255,255,0.2);
-            padding: 8px 16px;
-            border-radius: 20px;
-            display: inline-block;
-            margin-bottom: 16px;
-            font-size: 14px;
-        }
-        
-        .ai-title {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
-        
-        .ai-description {
-            font-size: 18px;
-            opacity: 0.9;
-            margin-bottom: 24px;
-            line-height: 1.5;
-        }
-        
-        .ai-btn {
-            background: white;
-            color: #8B5A96;
-            padding: 16px 32px;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-        
-        .ai-btn:hover {
-            transform: translateY(-2px);
-        }
-        
-        .ai-visual {
-            width: 200px;
-            height: 200px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 16px;
+
+        .input-group {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            gap: 8px;
         }
-        
-        .ai-visual::before {
-            content: '🧠';
-            font-size: 80px;
-            margin-bottom: 16px;
+
+        .input-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-gray);
         }
-        
-        .ai-model {
-            text-align: center;
+
+        .input-field {
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            width: 100%;
+            transition: border-color 0.2s;
         }
-        
-        .ai-model h3 {
-            font-size: 24px;
-            margin-bottom: 8px;
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
         }
-        
-        .ai-model p {
-            opacity: 0.8;
+
+        .btn-search {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            height: 52px;
         }
-        
-        .features {
+
+        .btn-search:hover {
+            background: var(--primary-dark);
+        }
+
+        /* AI Banner */
+        .ai-banner {
             max-width: 1200px;
-            margin: 80px auto;
+            margin: 0 auto 60px;
             padding: 0 20px;
         }
-        
-        .features h2 {
-            text-align: center;
-            font-size: 32px;
-            margin-bottom: 48px;
+
+        .ai-card {
+            background: linear-gradient(120deg, #6B4C7A, #8B5A96);
+            border-radius: 20px;
+            padding: 32px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 10px 20px rgba(107, 76, 122, 0.2);
         }
-        
-        .features-grid {
+
+        .ai-content h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .ai-content p {
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .btn-ai {
+            background: white;
+            color: #6B4C7A;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 24px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .btn-ai:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Destinations */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            color: var(--text-gray);
+            margin-top: 4px;
+        }
+
+        .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 24px;
         }
-        
-        .feature-card {
+
+        .card {
             background: white;
-            padding: 32px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            cursor: pointer;
         }
-        
-        .feature-card:hover {
+
+        .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-        
-        .feature-icon {
-            font-size: 48px;
+
+        .card-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .card-rating {
+            background: #00256c;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-gray);
             margin-bottom: 16px;
         }
-        
-        .feature-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 12px;
+
+        .card-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: right;
         }
-        
-        .feature-desc {
-            color: #666;
-            line-height: 1.5;
+
+        .card-price span {
+            font-size: 12px;
+            color: var(--text-gray);
+            font-weight: 400;
         }
-        
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feature-item {
+            display: flex;
+            gap: 16px;
+            align-items: start;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #E8F2FF;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+            color: var(--primary);
+        }
+
+        .feature-text h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-text p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
         .footer {
             background: #1a1a1a;
-            color: white;
-            padding: 40px 0;
-            text-align: center;
+            color: #999;
+            padding: 60px 0 20px;
         }
-        
-        .footer-content {
+
+        .footer-grid {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
         }
-        
-        .footer p {
-            opacity: 0.8;
+
+        .footer-col h4 {
+            color: white;
+            font-size: 16px;
+            margin-bottom: 20px;
         }
-        
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .footer-col li:hover {
+            color: white;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 13px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .search-form {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .btn-search {
+                grid-column: span 2;
+            }
+        }
+
         @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
             .hero h1 {
                 font-size: 32px;
             }
-            
-            .ai-banner {
-                flex-direction: column;
-                text-align: center;
+
+            .search-form {
+                grid-template-columns: 1fr;
             }
-            
-            .ai-visual {
-                width: 150px;
-                height: 150px;
+
+            .btn-search {
+                grid-column: span 1;
             }
-            
-            .nav {
-                flex-direction: column;
-                gap: 16px;
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
 </head>
+
 <body>
     <header class="header">
-        <nav class="nav">
-            <div class="logo">스카이 항공</div>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                ✈️ 스카이 항공
+            </a>
+            <nav class="nav-links">
+                <a href="#" class="nav-link">항공권</a>
+                <a href="#" class="nav-link">호텔</a>
+                <a href="#" class="nav-link">렌터카</a>
+                <a href="#" class="nav-link">패키지</a>
+                <a href="#" class="nav-link">이벤트</a>
+                <a href="#" class="nav-link">고객센터</a>
+            </nav>
             <div class="nav-right">
-                <div class="ai-badge">HyperCLOVA X SEED</div>
-                <button onclick="alert('로그인 기능')">로그인</button>
+                <div class="currency-selector" onclick="alert('통화 변경')">
+                    <span>KRW</span>
+                    <span style="color: var(--text-gray); font-weight: 400;">(₩)</span>
+                    <span style="font-size: 10px; margin-left: 2px; opacity: 0.5;">▼</span>
+                </div>
+                <button class="btn-login" onclick="alert('로그인 팝업')">로그인</button>
             </div>
-        </nav>
-        <div class="hero">
-            <h1>어디로 떠나시나요?</h1>
-            <p>AI가 추천하는 맞춤형 여행</p>
         </div>
     </header>
 
-    <main>
-        <section class="search-section">
-            <div class="search-card">
-                <div class="tabs">
-                    <div class="tab active" onclick="switchTab(this, 'flight')">항공권</div>
-                    <div class="tab" onclick="switchTab(this, 'hotel')">호텔</div>
-                    <div class="tab" onclick="switchTab(this, 'package')">패키지</div>
-                </div>
-                <input type="text" class="search-input" placeholder="어디로 가시나요?" id="searchInput">
-                <button class="search-btn" onclick="search()">검색</button>
-            </div>
-        </section>
+    <div class="hero">
+        <h1>세상을 만나는 가장 설레는 방법</h1>
+        <p>전 세계 100만 개 이상의 항공권과 호텔을 최저가로 만나보세요.</p>
+    </div>
 
-        <section class="ai-section">
-            <div class="ai-banner">
-                <div class="ai-content">
-                    <div class="ai-badge-new">🆕 NEW AI 기능</div>
-                    <h2 class="ai-title">HyperCLOVA X SEED로<br>더 똑똑해진 여행 플래너</h2>
-                    <p class="ai-description">네이버의 최신 AI 기술을 활용한 맞춤형 여행 추천<br>실시간 대화로 완벽한 여행 계획을 세워보세요</p>
-                    <button class="ai-btn" onclick="startAIChat()">AI 여행 플래너 시작하기</button>
+    <div class="search-container">
+        <div class="search-box">
+            <div class="search-tabs">
+                <div class="search-tab active" onclick="switchTab(this, 'flight')">✈️ 항공권</div>
+                <div class="search-tab" onclick="switchTab(this, 'hotel')">🏨 호텔</div>
+                <div class="search-tab" onclick="switchTab(this, 'package')">🎒 패키지</div>
+            </div>
+
+            <div class="search-form">
+                <div class="input-group">
+                    <label class="input-label">여행지</label>
+                    <input type="text" class="input-field" placeholder="어디로 떠나시나요?" value="다낭, 베트남">
                 </div>
-                <div class="ai-visual">
-                    <div class="ai-model">
-                        <h3>HyperCLOVA X</h3>
-                        <p>SEED</p>
+                <div class="input-group">
+                    <label class="input-label">가는 날</label>
+                    <input type="date" class="input-field" value="2024-06-15">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">오는 날</label>
+                    <input type="date" class="input-field" value="2024-06-20">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">인원 및 좌석</label>
+                    <input type="text" class="input-field" value="성인 2명, 일반석" readonly>
+                </div>
+                <button class="btn-search" onclick="search()">검색하기</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ai-banner">
+        <div class="ai-card">
+            <div class="ai-content">
+                <div
+                    style="background: rgba(255,255,255,0.2); display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; margin-bottom: 12px;">
+                    ✨ AI Beta</div>
+                <h2>AI 스마트 여행 플래너</h2>
+                <p>복잡한 여행 계획, 이제 AI에게 맡기세요. <br>취향 분석부터 일정 생성까지 단 1분이면 충분합니다.</p>
+                <button class="btn-ai" onclick="startAIChat()">
+                    <span>AI와 대화하기</span>
+                    <span>→</span>
+                </button>
+            </div>
+            <div style="font-size: 80px;">🧠</div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">인기 여행지 특가</h2>
+                <p class="section-subtitle">지금 가장 사랑받는 여행지를 저렴하게 떠나보세요.</p>
+            </div>
+            <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 700;">전체보기 →</a>
+        </div>
+
+        <div class="grid-cards">
+            <!-- Card 1 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    alt="Tokyo" class="card-img">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3 class="card-title">도쿄, 일본</h3>
+                        <span class="card-rating">4.8</span>
                     </div>
+                    <p class="card-desc">왕복 항공권 + 호텔 3박</p>
+                    <div class="card-price"><span>1인 기준</span> 459,000원~</div>
                 </div>
             </div>
-        </section>
 
-        <section class="features">
-            <h2>AI가 추천하는 여행</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3 class="feature-title">맞춤 추천</h3>
-                    <p class="feature-desc">취향과 예산을 분석하여 완벽한 여행지를 추천합니다</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📅</div>
-                    <h3 class="feature-title">일정 생성</h3>
-                    <p class="feature-desc">AI가 자동으로 최적의 여행 일정을 계획해드립니다</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💬</div>
-                    <h3 class="feature-title">실시간 상담</h3>
-                    <p class="feature-desc">24시간 언제든지 여행 관련 질문에 답변해드립니다</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📈</div>
-                    <h3 class="feature-title">트렌드 분석</h3>
-                    <p class="feature-desc">최신 여행 트렌드와 정보를 실시간으로 제공합니다</p>
+            <!-- Card 2 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    alt="Bangkok" class="card-img">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3 class="card-title">방콕, 태국</h3>
+                        <span class="card-rating">4.7</span>
+                    </div>
+                    <p class="card-desc">5성급 호텔 특가 패키지</p>
+                    <div class="card-price"><span>1인 기준</span> 389,000원~</div>
                 </div>
             </div>
-        </section>
-    </main>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    alt="Paris" class="card-img">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3 class="card-title">파리, 프랑스</h3>
+                        <span class="card-rating">4.9</span>
+                    </div>
+                    <p class="card-desc">낭만의 도시 유럽 여행</p>
+                    <div class="card-price"><span>1인 기준</span> 1,290,000원~</div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                    alt="Amsterdam" class="card-img">
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3 class="card-title">암스테르담</h3>
+                        <span class="card-rating">4.6</span>
+                    </div>
+                    <p class="card-desc">운하와 예술의 도시</p>
+                    <div class="card-price"><span>1인 기준</span> 1,150,000원~</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: #F0F4F9; padding: 60px 20px; border-radius: 20px;">
+        <div class="section-header" style="margin-bottom: 40px; text-align: center; display: block;">
+            <h2 class="section-title">스카이 항공만의 특별한 혜택</h2>
+            <p class="section-subtitle">여행의 시작부터 끝까지 든든하게 지원합니다.</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-text">
+                    <h3>안심 예약 보장</h3>
+                    <p>최저가 보상제와 무료 취소 옵션으로<br>걱정 없이 여행을 준비하세요.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💳</div>
+                <div class="feature-text">
+                    <h3>간편 결제 혜택</h3>
+                    <p>네이버페이, 카카오페이 결제 시<br>최대 5% 즉시 할인을 제공합니다.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📞</div>
+                <div class="feature-text">
+                    <h3>24시간 케어</h3>
+                    <p>현지에서도 문제없도록<br>글로벌 고객센터가 상시 대기합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 스카이 항공. HyperCLOVA X SEED 기반 AI 여행 플래너.</p>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>스카이 항공</h4>
+                <ul>
+                    <li>회사 소개</li>
+                    <li>채용 정보</li>
+                    <li>제휴 문의</li>
+                    <li>투자 정보</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>고객 지원</h4>
+                <ul>
+                    <li>공지사항</li>
+                    <li>자주 묻는 질문</li>
+                    <li>1:1 문의</li>
+                    <li>여행 약관</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>서비스</h4>
+                <ul>
+                    <li>항공권 예약</li>
+                    <li>호텔 예약</li>
+                    <li>투어/티켓</li>
+                    <li>기업 출장</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>AI 서비스</h4>
+                <ul>
+                    <li>AI 여행 플래너</li>
+                    <li>AI 멤버십</li>
+                    <li>기술 블로그</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2024 스카이 항공. All rights reserved.</p>
+            <p style="margin-top: 8px; color: #666; font-size: 12px;">(주)스카이항공 | 대표이사: 홍길동 | 사업자등록번호: 123-45-67890 |
+                서울특별시 강남구 테헤란로 123</p>
         </div>
     </footer>
 
     <script>
         function switchTab(element, type) {
             // Remove active from all tabs
-            document.querySelectorAll('.tab').forEach(tab => {
+            document.querySelectorAll('.search-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            
+
             // Add active to clicked tab
             element.classList.add('active');
-            
-            // Update placeholder based on tab
-            const input = document.getElementById('searchInput');
-            switch(type) {
-                case 'flight':
-                    input.placeholder = '어디로 가시나요?';
-                    break;
-                case 'hotel':
-                    input.placeholder = '호텔을 찾고 계신가요?';
-                    break;
-                case 'package':
-                    input.placeholder = '패키지 여행지를 검색하세요';
-                    break;
-            }
+
+            // Logic to change inputs based on tab (simplified for UI demo)
+            console.log('Switched to ' + type);
         }
-        
+
         function search() {
-            const query = document.getElementById('searchInput').value;
-            if (query.trim()) {
-                alert(`"${query}" 검색 결과를 불러오는 중...`);
-            } else {
-                alert('검색어를 입력해주세요!');
-            }
+            const destination = document.querySelector('.input-field').value;
+            alert(`'${destination}' 여행 상품을 검색합니다.\n잠시만 기다려주세요...`);
         }
-        
+
         function startAIChat() {
-            alert('HyperCLOVA X SEED AI 여행 플래너가 곧 시작됩니다!\n\n주요 기능:\n• 맞춤형 여행지 추천\n• 자동 일정 생성\n• 실시간 여행 상담\n• 최신 트렌드 분석');
+            alert('AI 스마트 여행 플래너를 실행합니다.');
         }
-        
-        // 페이지 로드 시 환영 메시지
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                console.log('🛫 스카이 항공에 오신 것을 환영합니다!');
-                console.log('🧠 HyperCLOVA X SEED AI가 여러분의 완벽한 여행을 도와드립니다.');
-            }, 1000);
-        });
     </script>
 </body>
+
 </html>
