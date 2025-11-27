@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'core/initialization/app_initializer.dart';
+import 'core/navigation/app_router.dart';
 import 'core/themes/app_theme.dart';
 import 'core/constants/app_strings.dart';
-import 'presentation/providers/auth_provider.dart';
-import 'presentation/screens/home_screen.dart';
 
-void main() {
-  runApp(const TravelMateApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // 앱 초기화
+  await AppInitializer.initialize();
+
+  runApp(const ProviderScope(child: TravelMateApp()));
 }
 
 class TravelMateApp extends StatelessWidget {
@@ -16,32 +21,28 @@ class TravelMateApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
+    return MaterialApp.router(
+      title: AppStrings.appName,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
+      debugShowCheckedModeBanner: false,
+
+      // Router
+      routerConfig: AppRouter.router,
+
+      // Localization
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
-      child: MaterialApp(
-        title: AppStrings.appName,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        themeMode: ThemeMode.system,
-        debugShowCheckedModeBanner: false,
-        
-        // Localization
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('ko', 'KR'),
-          Locale('en', 'US'), 
-          Locale('zh', 'CN'),
-          Locale('ja', 'JP'),
-        ],
-        
-        home: const HomeScreen(),
-      ),
+      supportedLocales: const [
+        Locale('ko', 'KR'),
+        Locale('en', 'US'),
+        Locale('zh', 'CN'),
+        Locale('ja', 'JP'),
+      ],
     );
   }
 }
